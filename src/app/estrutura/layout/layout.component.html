@@ -1,0 +1,24 @@
+<div class="layout-container">
+  <header class="layout-header">
+    <div class="container">
+      <div class="layout-logo">
+        <a routerLink="/inicio">MeuSite</a>
+      </div>
+      <nav class="layout-menu">
+        <a routerLink="/inicio" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+        <a routerLink="/jogos" routerLinkActive="ativo">Jogos</a>
+        <a routerLink="/quem-sou-eu" routerLinkActive="ativo">Quem Sou Eu</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="layout-conteudo" [class.full-width]="isHomeRoute()">
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="layout-footer">
+    <div class="container">
+      <p>© 2025 Luiz Brito - Todos os direitos reservados.</p>
+    </div>
+  </footer>
+</div>

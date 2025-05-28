@@ -1,12 +1,20 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterModule]
 })
 export class AppComponent {
-  title = 'portal-jogos-angular';
+  titulo = 'Portal de Jogos';
+
+  constructor(private router: Router) {}
+
+  isHomeRoute(): boolean {
+    return this.router.url === '/inicio' || this.router.url === '/';
+
+  }
 }

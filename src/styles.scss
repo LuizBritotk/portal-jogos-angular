@@ -1,1 +1,203 @@
-/* You can add global styles to this file, and also import other style files */
+/* === Variáveis de cores baseadas no GitHub (modo claro) === */
+:root {
+  --cor-primaria: #24292e;         /* Cabeçalho, títulos */
+  --cor-secundaria: #0366d6;       /* Links e botões */
+  --cor-terciaria: #28a745;        /* Sucesso */
+  --cor-alerta: #d73a49;           /* Erros */
+  --cor-fundo: #ffffff;            /* Fundo branco */
+  --cor-fundo-escuro: #f6f8fa;     /* Cards, tabelas */
+  --cor-texto-primario: #24292f;   /* Texto padrão */
+  --cor-texto-secundario: #586069; /* Legendas, descrições */
+  --cor-borda: #e1e4e8;            /* Bordas leves */
+  --cor-link: var(--cor-secundaria);
+  --cor-link-hover: #005cc5;
+  --cor-azul-celeste: #00bfff;
+  --cor-amarelo: #ffd700;
+
+
+  /* Botões */
+  --btn-fundo: var(--cor-secundaria);
+  --btn-fundo-hover: #005cc5;
+  --btn-texto: #ffffff;
+
+  /* Tabela */
+  --tabela-fundo-cabecalho: #f6f8fa;
+  --tabela-texto-cabecalho: #24292f;
+  --tabela-borda: #d1d5da;
+  --tabela-fundo-linha-alternada: #fafbfc;
+}
+
+/* === Tipografia estilo GitHub === */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-size: 16px;
+  color: var(--cor-texto-primario);
+  background-color: var(--cor-fundo);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+/* === Cabeçalhos === */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--cor-primaria);
+  font-weight: 600;
+  margin: 1rem 0 0.5rem;
+}
+
+p {
+  margin: 0.5rem 0 1rem;
+  color: var(--cor-texto-secundario);
+}
+
+/* === Links === */
+a {
+  color: var(--cor-link);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover,
+a:focus {
+  color: var(--cor-link-hover);
+  text-decoration: underline;
+}
+
+/* === Botões === */
+.botao {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background-color: var(--btn-fundo);
+  color: var(--btn-texto);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.botao:hover,
+.botao:focus {
+  background-color: var(--btn-fundo-hover);
+  outline: none;
+}
+
+.botao-secundario {
+  background-color: transparent;
+  color: var(--btn-fundo);
+  border: 1px solid var(--btn-fundo);
+}
+
+.botao-secundario:hover,
+.botao-secundario:focus {
+  background-color: var(--btn-fundo);
+  color: var(--btn-texto);
+}
+
+/* === Inputs e áreas de texto === */
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  background-color: #fff;
+  transition: border-color 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--cor-secundaria);
+  outline: none;
+}
+
+/* === Tabelas === */
+.tabela {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+  background-color: var(--cor-fundo-escuro);
+}
+
+.tabela th,
+.tabela td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--tabela-borda);
+  text-align: left;
+}
+
+.tabela thead {
+  background-color: var(--tabela-fundo-cabecalho);
+  color: var(--tabela-texto-cabecalho);
+}
+
+.tabela tbody tr:nth-child(even) {
+  background-color: var(--tabela-fundo-linha-alternada);
+}
+
+/* === Container === */
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+/* === Utilitários === */
+.mt-1 { margin-top: 0.25rem !important; }
+.mt-2 { margin-top: 0.5rem !important; }
+.mt-3 { margin-top: 1rem !important; }
+.mt-4 { margin-top: 1.5rem !important; }
+
+.mb-1 { margin-bottom: 0.25rem !important; }
+.mb-2 { margin-bottom: 0.5rem !important; }
+.mb-3 { margin-bottom: 1rem !important; }
+.mb-4 { margin-bottom: 1.5rem !important; }
+
+/* === Responsivo === */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .botao {
+    font-size: 0.875rem;
+    padding: 0.4rem 0.9rem;
+  }
+
+  .container {
+    padding: 0.5rem;
+  }
+}
+
+/* === Scrollbar customizada === */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--cor-fundo);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--cor-secundaria);
+  border-radius: 8px;
+  border: 2px solid var(--cor-fundo);
+}
+
+/* === Animação simples === */
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
