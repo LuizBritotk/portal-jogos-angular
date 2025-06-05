@@ -18,8 +18,13 @@ export const routes: Routes = [
       },
       {
         path: 'jogos',
-        loadChildren: () =>
+        loadComponent: () =>
           import('./funcionalidades/jogos/jogos.component').then(m => m.JogosComponent)
+      },
+      {
+        path: 'jogos/jogo-da-velha',
+        loadComponent: () =>
+          import('./funcionalidades/jogos/jogo-da-velha/jogo-da-velha.component').then(m => m.JogoDaVelhaComponent)
       },
       {
         path: 'quem-sou-eu',

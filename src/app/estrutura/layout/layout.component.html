@@ -1,24 +1,66 @@
-<div class="layout-container">
-  <header class="layout-header">
-    <div class="container">
-      <div class="layout-logo">
-        <a routerLink="/inicio">MeuSite</a>
+<body class="tema-claro">
+  <div class="layout">
+    <header class="layout__header">
+      <div class="layout__container">
+        <!-- Nome Profissional -->
+        <a class="layout__logo" routerLink="/inicio">
+          <span class="logo__main">LAB<span class="logo__dot">.</span>dev</span>
+          <span class="logo__tagline">software, design e tecnologia</span>
+        </a>
+
+        <!-- Menu Navegação Profissional -->
+        <nav class="layout__nav" aria-label="Menu principal">
+          <a routerLink="/inicio" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Início</a>
+          <a routerLink="/jogos" routerLinkActive="ativo">Jogos</a>
+          <a routerLink="/quem-sou-eu" routerLinkActive="ativo">Sobre Mim</a>
+          <a href="https://www.linkedin.com/in/luiz-américo-brito-995a4b113" target="_blank" rel="noopener">Contato</a>
+        </nav>
+
+        <!-- Botão de Tema (SVGs Mantidos) -->
+        <button
+          class="tema-toggle minimal"
+          (click)="toggleTema()"
+          [attr.aria-label]="'Alternar para tema ' + (temaAtual === 'claro' ? 'escuro' : 'claro')"
+        >
+          <svg
+            *ngIf="temaAtual === 'claro'"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"
+          >
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+
+          <svg
+            *ngIf="temaAtual === 'escuro'"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20" height="20" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round"
+          >
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+          </svg>
+        </button>
       </div>
-      <nav class="layout-menu">
-        <a routerLink="/inicio" routerLinkActive="ativo" [routerLinkActiveOptions]="{ exact: true }">Home</a>
-        <a routerLink="/jogos" routerLinkActive="ativo">Jogos</a>
-        <a routerLink="/quem-sou-eu" routerLinkActive="ativo">Quem Sou Eu</a>
-      </nav>
-    </div>
-  </header>
+    </header>
 
-  <main class="layout-conteudo" [class.full-width]="isHomeRoute()">
-    <router-outlet></router-outlet>
-  </main>
+    <main class="layout__content" [class.layout__content--full]="isHomeRoute()">
+      <router-outlet></router-outlet>
+    </main>
 
-  <footer class="layout-footer">
-    <div class="container">
-      <p>© 2025 Luiz Brito - Todos os direitos reservados.</p>
-    </div>
-  </footer>
-</div>
+    <footer class="layout__footer">
+      <div class="layout__container">
+        <p>© 2025 Luiz Brito - Todos os direitos reservados.</p>
+      </div>
+    </footer>
+  </div>
+</body>

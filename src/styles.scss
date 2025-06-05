@@ -1,33 +1,53 @@
-/* === Variáveis de cores baseadas no GitHub (modo claro) === */
+/* === Tema Claro === */
 :root {
-  --cor-primaria: #24292e;         /* Cabeçalho, títulos */
-  --cor-secundaria: #0366d6;       /* Links e botões */
-  --cor-terciaria: #28a745;        /* Sucesso */
-  --cor-alerta: #d73a49;           /* Erros */
-  --cor-fundo: #ffffff;            /* Fundo branco */
-  --cor-fundo-escuro: #f6f8fa;     /* Cards, tabelas */
-  --cor-texto-primario: #24292f;   /* Texto padrão */
-  --cor-texto-secundario: #586069; /* Legendas, descrições */
-  --cor-borda: #e1e4e8;            /* Bordas leves */
-  --cor-link: var(--cor-secundaria);
+  --cor-primaria: #24292e;
+  --cor-secundaria: #0366d6;
+  --cor-terciaria: #28a745;
+  --cor-alerta: #d73a49;
+  --cor-fundo: #ffffff;
+  --cor-fundo-escuro: #f6f8fa;
+  --cor-texto-primario: #24292f;
+  --cor-texto-secundario: #586069;
+  --cor-borda: #e1e4e8;
+  --cor-link: #0366d6;
   --cor-link-hover: #005cc5;
-  --cor-azul-celeste: #00bfff;
-  --cor-amarelo: #ffd700;
-
-
-  /* Botões */
-  --btn-fundo: var(--cor-secundaria);
+  --btn-fundo: #0366d6;
   --btn-fundo-hover: #005cc5;
   --btn-texto: #ffffff;
-
-  /* Tabela */
   --tabela-fundo-cabecalho: #f6f8fa;
   --tabela-texto-cabecalho: #24292f;
   --tabela-borda: #d1d5da;
   --tabela-fundo-linha-alternada: #fafbfc;
+  --cor-fixa-amarelo: #fdd835;
+  --cor-fixa-azul-celeste: #00bcd4;
 }
 
-/* === Tipografia estilo GitHub === */
+/* === Tema Escuro === */
+.tema-escuro {
+  --cor-primaria: #c9d1d9;
+  --cor-secundaria: #58a6ff;
+  --cor-terciaria: #3fb950;
+  --cor-alerta: #f85149;
+  --cor-fundo: #0d1117;
+  --cor-fundo-escuro: #161b22;
+  --cor-texto-primario: #c9d1d9;
+  --cor-texto-secundario: #8b949e;
+  --cor-borda: #30363d;
+  --cor-link: #58a6ff;
+  --cor-link-hover: #1f6feb;
+  --btn-fundo: #238636;
+  --btn-fundo-hover: #2ea043;
+  --btn-texto: #ffffff;
+  --tabela-fundo-cabecalho: #161b22;
+  --tabela-texto-cabecalho: #c9d1d9;
+  --tabela-borda: #30363d;
+  --tabela-fundo-linha-alternada: #161b22;
+  --cor-fixa-amarelo: #fdd835;
+  --cor-fixa-azul-celeste: #00bcd4;
+}
+
+
+/* === Tipografia === */
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
   font-size: 16px;
@@ -74,7 +94,7 @@ a:focus {
   background-color: var(--btn-fundo);
   color: var(--btn-texto);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .botao:hover,
@@ -95,7 +115,7 @@ a:focus {
   color: var(--btn-texto);
 }
 
-/* === Inputs e áreas de texto === */
+/* === Inputs === */
 input,
 select,
 textarea {
@@ -104,8 +124,9 @@ textarea {
   padding: 0.5rem;
   border: 1px solid var(--cor-borda);
   border-radius: 6px;
-  background-color: #fff;
-  transition: border-color 0.2s ease;
+  background-color: var(--cor-fundo-escuro);
+  color: var(--cor-texto-primario);
+  transition: border-color 0.2s ease, background-color 0.2s ease;
   width: 100%;
   box-sizing: border-box;
 }
@@ -176,7 +197,7 @@ textarea:focus {
   }
 }
 
-/* === Scrollbar customizada === */
+/* === Scrollbar === */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -192,7 +213,7 @@ textarea:focus {
   border: 2px solid var(--cor-fundo);
 }
 
-/* === Animação simples === */
+/* === Animações === */
 .fade-in {
   animation: fadeIn 0.4s ease-in-out forwards;
 }
