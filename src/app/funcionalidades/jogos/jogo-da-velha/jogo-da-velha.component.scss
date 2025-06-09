@@ -1,201 +1,72 @@
-.jogo-da-velha {
-  padding: 4rem 1rem;
-  text-align: center;
-  font-family: 'Segoe UI', sans-serif;
-  background: var(--cor-fundo);
-  border-radius: 16px;
-  box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+.pergunta-resposta {
+  background-color: $cor-fundo;
+  color: $cor-texto-primario;
+  font-family: $font-family-sans;
+  padding: $spacing-lg;
+  border-radius: $radius-lg;
+  box-shadow: $sombra-moderada;
 
-  .placar {
-    display: flex;
-    justify-content: center;
-    gap: 3rem;
-    margin-bottom: 2rem;
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: var(--cor-texto-primario);
+  .pergunta {
+    font-weight: $font-weight-semibold;
+    margin-bottom: $spacing-md;
+    color: $cor-primaria;
 
-    .pontos-jogador {
-      background-color: var(--cor-fundo-escuro);
-      padding: 0.8rem 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      min-width: 140px;
-      user-select: none;
-      transition: background-color 0.3s;
+    .texto-pergunta {
+      font-size: 1.5rem;
+      margin-bottom: $spacing-sm;
+    }
 
-      &.ativo {
-        background-color: var(--cor-fixa-azul-celeste);
-        color: #fff;
-        box-shadow: 0 0 15px var(--cor-fixa-azul-celeste);
+    .respostas-pergunta {
+      list-style: none;
+      padding: 0;
+
+      li {
+        background-color: $cor-fundo-card;
+        margin-bottom: $spacing-xs;
+        padding: $spacing-sm $spacing-md;
+        border-radius: $radius-md;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: border-color $transition-medium, background-color $transition-medium;
+
+        &:hover {
+          background-color: $cor-hover;
+          border-color: $cor-secundaria;
+        }
+
+        &.correta {
+          background-color: $cor-terciaria;
+          color: white;
+          border-color: darken($cor-terciaria, 10%);
+        }
+
+        &.errada {
+          background-color: $cor-alerta;
+          color: white;
+          border-color: darken($cor-alerta, 10%);
+        }
+      }
+    }
+
+    button {
+      margin-top: $spacing-md;
+      padding: $spacing-sm $spacing-lg;
+      background: $btn-fundo;
+      color: $btn-texto;
+      border-radius: $radius-lg;
+      font-weight: $font-weight-semibold;
+      border: none;
+      cursor: pointer;
+      transition: background $transition-medium;
+
+      &:hover:not(:disabled) {
+        background: $btn-fundo-hover;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
       }
     }
   }
-}
-
-.titulo {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--cor-secundaria);
-}
-
-.config-form {
-  max-width: 400px;
-  margin: 2rem auto;
-  background: var(--cor-fundo-escuro);
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
-
-  label {
-    display: block;
-    margin-bottom: 1rem;
-    font-weight: 600;
-    color: var(--cor-texto-primario);
-  }
-
-  input,
-  select {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 8px;
-    border: 1px solid var(--cor-borda);
-    font-size: 1rem;
-    background-color: var(--cor-fundo);
-    color: var(--cor-texto-primario);
-  }
-
-  .tamanho-tabuleiro {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin: 1rem 0;
-    justify-content: center;
-    color: var(--cor-texto-primario);
-  }
-
-  .botao-tamanho {
-    background: var(--cor-fundo-escuro);
-    padding: 0.5rem 1rem;
-    border: 1px solid var(--cor-borda);
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    color: var(--cor-texto-primario);
-    transition: all 0.2s ease;
-
-    &.selecionado {
-      background: var(--cor-fixa-azul-celeste);
-      color: #fff;
-    }
-  }
-
-  // Estilo para nível do bot
-  .nivel-bot {
-    margin-top: 1rem;
-
-    label {
-      font-weight: 600;
-      display: block;
-      margin-bottom: 0.3rem;
-      color: var(--cor-texto-primario);
-    }
-
-    select {
-      width: 150px;
-      padding: 0.5rem;
-      border-radius: 8px;
-      border: 1px solid var(--cor-borda);
-      background-color: var(--cor-fundo);
-      color: var(--cor-texto-primario);
-      font-size: 1rem;
-    }
-  }
-}
-
-.botao-iniciar,
-.botao-reiniciar {
-  background: var(--btn-fundo);
-  color: var(--btn-texto);
-  padding: 0.75rem 1.5rem;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: bold;
-  margin-top: 1rem;
-  cursor: pointer;
-  transition: background-color 0.3s;
-
-  &:hover {
-    background-color: var(--btn-fundo-hover);
-  }
-}
-
-.tabuleiro {
-  display: grid;
-  gap: 10px;
-  margin: 2rem auto;
-  width: 100%;
-  max-width: 400px;
-}
-
-.casa {
-  background: var(--cor-fundo);
-  border-radius: 12px;
-  box-shadow: inset 2px 2px 8px #cfd8dc, inset -2px -2px 8px #ffffff;
-  font-size: 2rem;
-  font-weight: bold;
-  cursor: pointer;
-  aspect-ratio: 1/1;
-  transition: transform 0.1s ease;
-  color: var(--cor-texto-primario);
-
-  &:active {
-    transform: scale(0.95);
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-}
-
-.modal-vitoria {
-  position: fixed;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  backdrop-filter: blur(12px);
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 1000;
-}
-
-.modal-conteudo {
-  background: var(--cor-fundo);
-  padding: 2rem 3rem;
-  border-radius: 16px;
-  text-align: center;
-  animation: pop 0.4s ease;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-  position: relative;
-  color: var(--cor-texto-primario);
-}
-
-.trofeu-3d {
-  font-size: 5rem;
-  color: var(--cor-fixa-amarelo);
-  animation: pulse 1.5s infinite alternate;
-  filter: drop-shadow(2px 4px 6px var(--cor-fixa-amarelo));
-}
-
-@keyframes pulse {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.2); }
-}
-
-@keyframes pop {
-  0% { transform: scale(0.6); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
 }

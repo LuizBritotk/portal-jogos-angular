@@ -1,149 +1,115 @@
-:root {
-  --container-max-width: 1080px;
-  --padding: 1rem;
 
-  --cor-header-bg: var(--cor-primaria);
-  --cor-texto-claro: white;
-  --cor-hover: var(--cor-secundaria);
+body {
+  font-family: var(--fonte-principal);
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
 }
 
-/* === Layout base === */
-.layout {
+.estrutura-site {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  background-color: var(--cor-fundo);
 }
 
-.layout__container {
-  max-width: var(--container-max-width);
+.estrutura-container {
+  width: 100%;
+  max-width: clamp(420px, 95vw, 2000px);
   margin: 0 auto;
-  padding: 0 var(--padding);
-  width: 100%;
+  padding: var(--espacamento-padrao);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-/* === Header === */
-.layout__header {
-  background-color: var(--cor-header-bg);
-  color: var(--cor-texto-claro);
-  padding: var(--padding) 0;
-  position: fixed;
-  width: 100%;
+// Cabeçalho
+.cabecalho-site {
+  background-color: var(--cor-header);
+  box-shadow: var(--sombra-header);
+  padding: var(--espacamento-padrao) 0;
+  position: sticky;
   top: 0;
-  z-index: 10;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
+  z-index: 1000;
 
-/* === Logo estilizado === */
-.layout__logo {
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  font-weight: bold;
-  color: var(--cor-texto-claro);
-  line-height: 1.2;
+  .logo-site {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
 
-  .logo__main {
-    font-size: 1.6rem;
-    letter-spacing: -0.5px;
+    .logo-texto {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--cor-logo);
+    }
 
-    .logo__dot {
-      color: var(--cor-hover);
+    .logo-ponto {
+      color: var(--cor-destaque);
+    }
+
+    .logo-subtitulo {
+      font-size: 0.8rem;
+      color: var(--cor-texto-secundario);
     }
   }
 
-  .logo__tagline {
-    font-size: 0.7rem;
-    color: var(--cor-texto-claro);
-    font-weight: 400;
-    margin-top: 2px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+  .menu-principal {
+    display: flex;
+    gap: 1.5rem;
+
+    a {
+      text-decoration: none;
+      font-weight: 500;
+      color: var(--cor-link);
+      position: relative;
+
+      &.ativo {
+        color: var(--cor-link-ativo);
+        font-weight: 600;
+      }
+
+      &:hover {
+        color: var(--cor-link-hover);
+      }
+    }
+  }
+
+  .botao-tema {
+    background: none;
+    border: none;
+    color: var(--cor-icon);
+    cursor: pointer;
+    padding: 0.5rem;
+
+    svg {
+      transition: transform 0.3s ease;
+    }
+
+    &:hover svg {
+      transform: scale(1.1);
+    }
   }
 }
 
-/* === Navegação === */
-.layout__nav {
-  display: flex;
-  gap: 2rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.layout__nav a {
-  color: var(--cor-texto-claro);
-  text-decoration: none;
-  font-weight: 600;
-  padding-bottom: 4px;
-  position: relative;
-  transition: color 0.3s ease;
-}
-
-.layout__nav a.ativo {
-  border-bottom: 3px solid var(--cor-hover);
-  font-weight: 700;
-}
-
-.layout__nav a:hover {
-  color: var(--cor-hover);
-}
-
-/* === Botão de tema === */
-.tema-toggle.minimal {
-  background: none;
-  border: none;
-  color: var(--cor-texto-claro);
-  padding: 0.5rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: color 0.3s ease, transform 0.2s ease;
-}
-
-.tema-toggle.minimal:hover {
-  color: var(--cor-hover);
-  transform: scale(1.1);
-}
-
-.tema-toggle.minimal svg {
-  width: 22px;
-  height: 22px;
-  stroke: currentColor;
-}
-
-/* === Conteúdo principal === */
-.layout__content {
+// Conteúdo principal
+.conteudo-site {
   flex: 1;
-  padding: 6rem var(--padding) 2rem;
-  width: 100%;
-  max-width: var(--container-max-width);
-  margin: 0 auto;
+  padding: var(--espacamento-padrao);
+  background-color: var(--cor-fundo);
+
+  &--cheio {
+    padding: 0;
+  }
 }
 
-.layout__content--full {
-  max-width: 100%;
-  padding: 6rem 0 2rem;
-}
-
-/* === Rodapé === */
-.layout__footer {
-  background-color: var(--cor-header-bg);
-  color: #bbb;
+// Rodapé
+.rodape-site {
+  background-color: var(--cor-footer);
+  color: var(--cor-footer-texto);
   text-align: center;
-  padding: var(--padding) 0;
-  font-size: 0.9rem;
-  font-style: italic;
-  margin-top: auto;
-}
+  padding: 1.5rem 0;
 
-/* === Transições globais === */
-.layout__header,
-.layout__footer,
-.tema-toggle,
-.layout__nav a {
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
 }

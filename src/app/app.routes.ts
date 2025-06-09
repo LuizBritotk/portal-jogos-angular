@@ -27,6 +27,11 @@ export const routes: Routes = [
           import('./funcionalidades/jogos/jogo-da-velha/jogo-da-velha.component').then(m => m.JogoDaVelhaComponent)
       },
       {
+        path: 'jogos/pergunta-resposta',
+        loadComponent: () =>
+          import('./funcionalidades/jogos/pergunta-resposta/pergunta-resposta.component').then(m => m.PerguntaRespostaComponent)
+      },
+      {
         path: 'quem-sou-eu',
         loadComponent: () =>
           import('./funcionalidades/quem-sou-eu/quem-sou-eu.component').then(m => m.QuemSouEuComponent)

@@ -1,18 +1,22 @@
-<section class="jogos">
-  <div class="layout__container">
-    <h1 class="jogos__titulo">Meus Jogos</h1>
-    <p class="jogos__subtitulo">Projetos de jogos desenvolvidos</p>
-
- <!-- Card do Jogo da Velha -->
-    <div class="jogo-card jogo-card--fundo" style="background-image: url('assets/jogos/jogo-da-velha.jpg')">
-      <div class="jogo-card__overlay">
-        <div class="jogo-card__conteudo">
-          <h2 class="jogo-card__titulo">Jogo da Velha</h2>
-          <p class="jogo-card__descricao">Clássico jogo da velha para 2 jogadores ou contra o bot.</p>
-          <a href="/jogos/jogo-da-velha" class="jogo-card__botao">Jogar Agora</a>
-        </div>
+<main id="jogos">
+  <section class="container-jogos">
+    <div
+      class="card-jogo"
+      *ngFor="let jogo of jogos"
+      (click)="irParaJogo(jogo.rota)"
+    >
+      <div class="card-imagem" [innerHTML]="jogo.svg | safeHtml"></div>
+      <div class="card-info">
+        <h3 class="nome-jogo">{{ jogo.nome }}</h3>
+        <p class="descricao-jogo">{{ jogo.descricao }}</p>
+        <button
+          class="btn-jogar"
+          (click)="irParaJogo(jogo.rota); $event.stopPropagation()"
+          [attr.aria-label]="'Jogar ' + jogo.nome"
+        >
+          Jogar
+        </button>
       </div>
     </div>
-
-  </div>
-</section>
+  </section>
+</main>

@@ -1,81 +1,120 @@
-<section class="jogo-da-velha layout__container">
-  <h1 class="titulo">Jogo da Velha</h1>
-  <p class="subtitulo">Configure seu jogo e divirta-se com um visual moderno!</p>
 
-  <!-- Formulário -->
-  <form *ngIf="!jogoIniciado" class="config-form" (ngSubmit)="iniciarJogo()">
-    <label>
-      Jogador 1:
-      <input type="text" [(ngModel)]="jogador1" name="jogador1" required />
-    </label>
+<main class="jogo-da-velha container">
+  <h1 class="titulo mb-3">Jogo da Velha</h1>
+  <p class="subtitulo mb-4">Configure seu jogo e divirta-se com um visual moderno!</p>
 
-    <label>
-      Modo de jogo:
-      <select [(ngModel)]="modoJogo" name="modoJogo" required>
+  <form *ngIf="!jogoIniciado" class="config-form mb-5" (ngSubmit)="iniciarJogo()">
+    <div class="form-group">
+      <label for="jogador1" class="form-label">Jogador 1</label>
+      <input
+        id="jogador1"
+        type="text"
+        [(ngModel)]="jogador1"
+        name="jogador1"
+        required
+        class="input-text"
+        placeholder="Nome do jogador 1"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="modoJogo" class="form-label">Modo de jogo</label>
+      <select
+        id="modoJogo"
+        [(ngModel)]="modoJogo"
+        name="modoJogo"
+        required
+        class="input-select"
+      >
         <option value="pvp">Player vs Player</option>
         <option value="bot">Player vs Bot</option>
       </select>
-    </label>
+    </div>
 
-    <label *ngIf="modoJogo === 'pvp'">
-      Jogador 2:
-      <input type="text" [(ngModel)]="jogador2" name="jogador2" required />
-    </label>
+    <div *ngIf="modoJogo === 'pvp'" class="form-group">
+      <label for="jogador2" class="form-label">Jogador 2</label>
+      <input
+        id="jogador2"
+        type="text"
+        [(ngModel)]="jogador2"
+        name="jogador2"
+        required
+        class="input-text"
+        placeholder="Nome do jogador 2"
+        autocomplete="off"
+      />
+    </div>
 
-    <label *ngIf="modoJogo === 'bot'">
-      Nível do Bot:
-      <select [(ngModel)]="nivelBot" name="nivelBot" required>
+    <div *ngIf="modoJogo === 'bot'" class="form-group">
+      <label for="nivelBot" class="form-label">Nível do Bot</label>
+      <select
+        id="nivelBot"
+        [(ngModel)]="nivelBot"
+        name="nivelBot"
+        required
+        class="input-select"
+      >
         <option value="facil">Fácil</option>
         <option value="medio">Médio</option>
         <option value="dificil">Difícil</option>
       </select>
-    </label>
-
-    <div class="tamanho-tabuleiro">
-      <span>Tamanho:</span>
-      <button
-        type="button"
-        *ngFor="let opcao of opcoesQuadrados"
-        class="botao-tamanho"
-        [ngClass]="{ selecionado: tamanho === opcao }"
-        (click)="tamanho = opcao">
-        {{ Math.sqrt(opcao) }}x{{ Math.sqrt(opcao) }}
-      </button>
     </div>
 
-    <button type="submit" class="botao-iniciar">Começar</button>
+    <fieldset class="tamanho-tabuleiro">
+      <legend class="form-label">Tamanho do tabuleiro</legend>
+      <div class="btn-group">
+        <button
+          type="button"
+          *ngFor="let opcao of opcoesQuadrados"
+          class="botao-tamanho"
+          [ngClass]="{ selecionado: tamanho === opcao }"
+          (click)="tamanho = opcao"
+          [attr.aria-pressed]="tamanho === opcao"
+        >
+          {{ Math.sqrt(opcao) }} x {{ Math.sqrt(opcao) }}
+        </button>
+      </div>
+    </fieldset>
+
+    <div class="botoes-form">
+      <button type="submit" class="botao botao-iniciar">Começar</button>
+    </div>
   </form>
 
-  <!-- Placar -->
-  <div *ngIf="jogoIniciado" class="placar">
-    <p>{{ jogador1 }}: {{ pontosJogador1 }} pts</p>
-    <p>{{ jogador2 }}: {{ pontosJogador2 }} pts</p>
-  </div>
+  <!-- TABULEIRO E CONTROLE DE JOGO -->
+  <section *ngIf="jogoIniciado" class="jogo-container">
+    <div class="info-jogo">
+      <h2 *ngIf="!vencedor">Vez de: {{ jogadorAtual === 'O' ? jogador1 : jogador2 }}</h2>
+      <h2 *ngIf="vencedor && vencedor !== 'Empate'">🎉 Vitória de {{ vencedor }}!</h2>
+      <h2 *ngIf="vencedor === 'Empate'">🤝 Empate!</h2>
+    </div>
 
-  <!-- Jogo -->
-  <div *ngIf="jogoIniciado" class="tabuleiro-container">
-    <div class="vez">{{ jogadorAtual === 'O' ? jogador1 : jogador2 }} é a vez!</div>
+   <div
+      class="tabuleiro"
+      [ngClass]="'tamanho-' + lado"
+      [style.gridTemplateColumns]="'repeat(' + lado + ', auto)'"
+      [style.gridTemplateRows]="'repeat(' + lado + ', auto)'"
+    >
 
-    <div class="tabuleiro" [style.gridTemplateColumns]="'repeat(' + lado + ', 1fr)'">
       <button
-        *ngFor="let cell of tabuleiro; let i = index"
+        *ngFor="let celula of tabuleiro; index as i"
         class="casa"
+        [disabled]="celula !== '' || vencedor"
         (click)="jogar(i)"
-        [disabled]="cell || vencedor">
-        {{ cell }}
+      >
+        {{ celula }}
       </button>
     </div>
 
-    <button class="botao-reiniciar" (click)="reiniciar()">Reiniciar</button>
-  </div>
-
-  <!-- Modal de Vitória -->
-  <div *ngIf="vencedor && vencedor !== 'Empate'" class="modal-vitoria">
-    <div class="modal-conteudo">
-      <div class="trofeu-3d">🏆</div>
-      <h2>Vitória de {{ vencedor }}!</h2>
-      <div class="fogos-light"></div>
-      <button class="botao-reiniciar" (click)="reiniciar()">Jogar Novamente</button>
+    <div class="pontos">
+      <p><strong>{{ jogador1 }}:</strong> {{ pontosJogador1 }} ponto(s)</p>
+      <p><strong>{{ jogador2 }}:</strong> {{ pontosJogador2 }} ponto(s)</p>
     </div>
-  </div>
-</section>
+
+    <div class="botoes-controle">
+      <button class="botao" (click)="iniciarJogo()">Reiniciar Partida</button>
+      <button class="botao botao-resetar" (click)="reiniciar()">Resetar Jogo</button>
+    </div>
+  </section>
+</main>

@@ -1,0 +1,51 @@
+<main class="pergunta-resposta container">
+  <div class="jogo" [class.jogo-iniciado]="!mostrarResultados">
+
+    <div *ngIf="!mostrarResultados" class="pergunta">
+      <h2 class="texto-pergunta">{{ perguntas[indiceAtual].texto }}</h2>
+      <ul class="respostas-pergunta">
+        <li
+          *ngFor="let resposta of perguntas[indiceAtual].respostas; let i = index"
+          [class.correta]="mostrarResultados && i === perguntas[indiceAtual].correta"
+          [attr.data-selecionada]="perguntas[indiceAtual].selecao === i ? true : null"
+        >
+          <input
+            type="radio"
+            [id]="'p' + perguntas[indiceAtual].id + '-' + i"
+            [name]="'p_' + perguntas[indiceAtual].id"
+            [value]="i"
+            (change)="selecionarResposta(i)"
+            [checked]="perguntas[indiceAtual].selecao === i"
+          />
+          <label [for]="'p' + perguntas[indiceAtual].id + '-' + i">{{ resposta }}</label>
+        </li>
+      </ul>
+
+      <button
+        class="botao-pergunta"
+        (click)="proximaPergunta()"
+        [disabled]="perguntas[indiceAtual].selecao === null"
+      >
+        {{ indiceAtual < perguntas.length - 1 ? 'Próxima' : 'Finalizar' }}
+      </button>
+    </div>
+
+    <div *ngIf="mostrarResultados" class="resultado" data-jogo-finalizado>
+      <div class="item-resultado correta">
+        <span class="contagem-resultado">{{ quantidadeCorretas }}</span>
+        <span class="texto-resultado">Corretas</span>
+      </div>
+      <div class="item-resultado errada">
+        <span class="contagem-resultado">{{ quantidadeErradas }}</span>
+        <span class="texto-resultado">Erradas</span>
+      </div>
+      <div class="item-resultado">
+        <span class="contagem-resultado">{{ quantidadeNaoRespondidas }}</span>
+        <span class="texto-resultado">Não Respondidas</span>
+      </div>
+
+      <button class="botao-reiniciar" (click)="reiniciarQuiz()">Reiniciar Quiz</button>
+    </div>
+
+  </div>
+</main>
