@@ -45,6 +45,7 @@ export class PerguntaRespostaComponent {
   indiceAtual = 0;
   mostrarResultados = false;
 
+  // Getters para contagem do resultado final
   get quantidadeCorretas(): number {
     return this.perguntas.filter(p => p.selecao === p.correta).length;
   }
@@ -57,11 +58,18 @@ export class PerguntaRespostaComponent {
     return this.perguntas.filter(p => p.selecao === null).length;
   }
 
+  // Registra a resposta selecionada
   selecionarResposta(indiceResposta: number): void {
     this.perguntas[this.indiceAtual].selecao = indiceResposta;
   }
 
+  // Avança para próxima pergunta ou finaliza o quiz
   proximaPergunta(): void {
+    if (this.perguntas[this.indiceAtual].selecao === null) {
+      // Opcional: mostrar alerta ou feedback ao usuário
+      return; // evita avançar sem seleção
+    }
+
     if (this.indiceAtual < this.perguntas.length - 1) {
       this.indiceAtual++;
     } else {
@@ -69,6 +77,7 @@ export class PerguntaRespostaComponent {
     }
   }
 
+  // Reinicia o quiz zerando dados
   reiniciarQuiz(): void {
     this.indiceAtual = 0;
     this.mostrarResultados = false;

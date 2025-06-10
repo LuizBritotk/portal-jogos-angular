@@ -1,23 +1,34 @@
 <main class="pergunta-resposta container">
+
+  <!-- Área principal do jogo -->
   <div class="jogo" [class.jogo-iniciado]="!mostrarResultados">
 
+    <!-- Pergunta atual -->
     <div *ngIf="!mostrarResultados" class="pergunta">
       <h2 class="texto-pergunta">{{ perguntas[indiceAtual].texto }}</h2>
+
       <ul class="respostas-pergunta">
         <li
           *ngFor="let resposta of perguntas[indiceAtual].respostas; let i = index"
-          [class.correta]="mostrarResultados && i === perguntas[indiceAtual].correta"
           [attr.data-selecionada]="perguntas[indiceAtual].selecao === i ? true : null"
         >
-          <input
-            type="radio"
-            [id]="'p' + perguntas[indiceAtual].id + '-' + i"
-            [name]="'p_' + perguntas[indiceAtual].id"
-            [value]="i"
-            (change)="selecionarResposta(i)"
-            [checked]="perguntas[indiceAtual].selecao === i"
-          />
-          <label [for]="'p' + perguntas[indiceAtual].id + '-' + i">{{ resposta }}</label>
+          <div class="resposta-wrapper">
+            <div
+              class="resposta-label"
+              (click)="selecionarResposta(i)"
+              [class.selecionada]="perguntas[indiceAtual].selecao === i"
+            >
+              <input
+                class="resposta-input"
+                type="radio"
+                [name]="'p_' + perguntas[indiceAtual].id"
+                [value]="i"
+                [checked]="perguntas[indiceAtual].selecao === i"
+                hidden
+              />
+              {{ resposta }}
+            </div>
+          </div>
         </li>
       </ul>
 
@@ -30,6 +41,7 @@
       </button>
     </div>
 
+    <!-- Resultados finais -->
     <div *ngIf="mostrarResultados" class="resultado" data-jogo-finalizado>
       <div class="item-resultado correta">
         <span class="contagem-resultado">{{ quantidadeCorretas }}</span>
@@ -45,6 +57,30 @@
       </div>
 
       <button class="botao-reiniciar" (click)="reiniciarQuiz()">Reiniciar Quiz</button>
+    </div>
+
+    <!-- Gabarito final: exibe apenas resposta correta e selecionada -->
+    <div *ngIf="mostrarResultados" class="gabarito-final">
+      <h3 class="titulo-gabarito">Respostas Corretas</h3>
+
+      <div *ngFor="let pergunta of perguntas; let idx = index" class="bloco-gabarito">
+        <p class="enunciado-gabarito">
+          {{ idx + 1 }}. {{ pergunta.texto }}
+        </p>
+
+        <ul class="lista-respostas">
+          <ng-container *ngFor="let resposta of pergunta.respostas; let i = index">
+            <li
+              *ngIf="i === pergunta.correta || i === pergunta.selecao"
+              [class.correta]="i === pergunta.correta"
+              [class.errada]="pergunta.selecao === i && i !== pergunta.correta"
+              [class.selecionada]="pergunta.selecao === i"
+            >
+              {{ resposta }}
+            </li>
+          </ng-container>
+        </ul>
+      </div>
     </div>
 
   </div>
