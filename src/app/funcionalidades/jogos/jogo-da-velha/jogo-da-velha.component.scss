@@ -1,72 +1,72 @@
 .pergunta-resposta {
-  background-color: $cor-fundo;
-  color: $cor-texto-primario;
-  font-family: $font-family-sans;
-  padding: $spacing-lg;
-  border-radius: $radius-lg;
-  box-shadow: $sombra-moderada;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto-primario);
+  font-family: var(--font-family-sans);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--sombra-moderada);
+}
 
-  .pergunta {
-    font-weight: $font-weight-semibold;
-    margin-bottom: $spacing-md;
-    color: $cor-primaria;
+.pergunta-resposta .pergunta {
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+  color: var(--cor-primaria);
+}
 
-    .texto-pergunta {
-      font-size: 1.5rem;
-      margin-bottom: $spacing-sm;
-    }
+.pergunta-resposta .pergunta .texto-pergunta {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-sm);
+}
 
-    .respostas-pergunta {
-      list-style: none;
-      padding: 0;
+.pergunta-resposta .pergunta .respostas-pergunta {
+  list-style: none;
+  padding: 0;
+}
 
-      li {
-        background-color: $cor-fundo-card;
-        margin-bottom: $spacing-xs;
-        padding: $spacing-sm $spacing-md;
-        border-radius: $radius-md;
-        cursor: pointer;
-        border: 1px solid transparent;
-        transition: border-color $transition-medium, background-color $transition-medium;
+.pergunta-resposta .pergunta .respostas-pergunta li {
+  background-color: var(--cor-fundo-card);
+  margin-bottom: var(--spacing-xs);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color var(--transition-medium), background-color var(--transition-medium);
+}
 
-        &:hover {
-          background-color: $cor-hover;
-          border-color: $cor-secundaria;
-        }
+.pergunta-resposta .pergunta .respostas-pergunta li:hover {
+  background-color: var(--cor-hover);
+  border-color: var(--cor-secundaria);
+}
 
-        &.correta {
-          background-color: $cor-terciaria;
-          color: white;
-          border-color: darken($cor-terciaria, 10%);
-        }
+.pergunta-resposta .pergunta .respostas-pergunta li.correta {
+  background-color: var(--cor-terciaria);
+  color: white;
+  border-color: #218838; /* opcional: pode usar uma nova variável se desejar */
+}
 
-        &.errada {
-          background-color: $cor-alerta;
-          color: white;
-          border-color: darken($cor-alerta, 10%);
-        }
-      }
-    }
+.pergunta-resposta .pergunta .respostas-pergunta li.errada {
+  background-color: var(--cor-alerta);
+  color: white;
+  border-color: #c82333; /* idem */
+}
 
-    button {
-      margin-top: $spacing-md;
-      padding: $spacing-sm $spacing-lg;
-      background: $btn-fundo;
-      color: $btn-texto;
-      border-radius: $radius-lg;
-      font-weight: $font-weight-semibold;
-      border: none;
-      cursor: pointer;
-      transition: background $transition-medium;
+.pergunta-resposta .pergunta button {
+  margin-top: var(--spacing-md);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--btn-fundo);
+  color: var(--btn-texto);
+  border-radius: var(--radius-lg);
+  font-weight: var(--font-weight-semibold);
+  border: none;
+  cursor: pointer;
+  transition: background var(--transition-medium);
+}
 
-      &:hover:not(:disabled) {
-        background: $btn-fundo-hover;
-      }
+.pergunta-resposta .pergunta button:hover:not(:disabled) {
+  background: var(--btn-fundo-hover);
+}
 
-      &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-    }
-  }
+.pergunta-resposta .pergunta button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }

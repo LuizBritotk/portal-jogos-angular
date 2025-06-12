@@ -31,6 +31,9 @@
   --cor-hover-borda: #d1d5da;
   --cor-formulario: linear-gradient(135deg, #000000, #0a1f44, #1a3b70);
   --cor-labels: linear-gradient(135deg, #e0eafc, #cfdef3, #dbe9f4);
+  --svg-bg-fill: #3a3a3a;
+  --svg-stroke: rgb(255, 253, 253);
+  --svg-text-fill: white;
 
   /* Espaçamentos */
   --spacing-xxs: 0.125rem;
@@ -60,14 +63,10 @@
   --sombra-moderada: 0 4px 12px rgba(0, 0, 0, 0.1);
   --sombra-forte: 0 12px 24px rgba(0, 0, 0, 0.15);
 
-  // /* Transições */
-  // --transition-fast: 0.15s ease-in-out;
-  // --transition-medium: 0.3s ease-in-out;
-  // --transition-slow: 0.5s ease-in-out;
-
-  --svg-bg-fill: #3a3a3a;
-  --svg-stroke: rgb(255, 253, 253);
-  --svg-text-fill: white;
+  /* Transições */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-medium: 0.3s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
 }
 
 /* === Tema Escuro === */

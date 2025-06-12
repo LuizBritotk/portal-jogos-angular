@@ -1,5 +1,40 @@
 <main class="pergunta-resposta container">
 
+  <!-- Botão de entrar como administrador -->
+  <div class="area-admin" *ngIf="!modoEdicao">
+    <button (click)="ativarModoEdicao()">Entrar como Administrador</button>
+  </div>
+
+  <!-- Botão para cadastrar nova pergunta -->
+  <div class="area-admin" *ngIf="modoEdicao">
+    <button (click)="abrirFormularioCadastro()">+ Nova Pergunta</button>
+    <button (click)="sairModoEdicao()">Sair do Modo Admin</button>
+  </div>
+
+  <!-- Formulário de nova pergunta -->
+  <div *ngIf="formularioAberto" class="formulario-cadastro">
+    <h3>Nova Pergunta</h3>
+
+    <label>Enunciado:</label>
+    <input type="text" [(ngModel)]="novaPergunta.texto" placeholder="Digite a pergunta" />
+
+    <label>Respostas:</label>
+    <div *ngFor="let resposta of novaPergunta.respostas; let i = index">
+      <input [(ngModel)]="novaPergunta.respostas[i]" placeholder="Digite a resposta {{ i + 1 }}" />
+      <button (click)="removerResposta(i)">Remover</button>
+    </div>
+
+    <button (click)="adicionarResposta()">+ Adicionar Resposta</button>
+
+    <label>Índice da Resposta Correta:</label>
+    <input type="number" [(ngModel)]="novaPergunta.correta" min="0" [max]="novaPergunta.respostas.length - 1" />
+
+    <div class="acoes-formulario">
+      <button (click)="salvarPergunta()">Salvar</button>
+      <button (click)="fecharFormularioCadastro()">Cancelar</button>
+    </div>
+  </div>
+
   <!-- Área principal do jogo -->
   <div class="jogo" [class.jogo-iniciado]="!mostrarResultados">
 
@@ -59,7 +94,7 @@
       <button class="botao-reiniciar" (click)="reiniciarQuiz()">Reiniciar Quiz</button>
     </div>
 
-    <!-- Gabarito final: exibe apenas resposta correta e selecionada -->
+    <!-- Gabarito final -->
     <div *ngIf="mostrarResultados" class="gabarito-final">
       <h3 class="titulo-gabarito">Respostas Corretas</h3>
 
