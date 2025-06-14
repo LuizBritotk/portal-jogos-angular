@@ -1,86 +1,124 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { PerguntaService } from './servico/pergunta.service';
+import { Pergunta, RankingCategoria } from './modelo/pergunta.model';
 
-interface Pergunta {
-  id: number;
-  texto: string;
-  respostas: string[];
-  correta: number;
-  selecao: number | null;
-}
+
 
 @Component({
   selector: 'app-pergunta-resposta',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
   templateUrl: './pergunta-resposta.component.html',
-  styleUrls: ['./pergunta-resposta.component.scss'],
+    imports: [CommonModule],
+  styleUrls: ['./pergunta-resposta.component.scss']
 })
-export class PerguntaRespostaComponent {
-  perguntas: Pergunta[] = [
+export class PerguntaRespostaComponent implements OnInit {
+  categorias = ['História', 'Ciência', 'Tecnologia'];
+
+  jogoIniciado = false;
+  jogoFinalizado = false;
+
+  perguntas: Pergunta[] = [];
+  perguntaAtual = 0;
+  respostaSelecionada: number | null = null;
+  respostasUsuario: number[] = [];
+
+  rankingsPorCategoria: RankingCategoria[] = [
     {
-      id: 1,
-      texto: 'Qual é a capital do Brasil?',
-      respostas: ['São Paulo', 'Rio de Janeiro', 'Brasília', 'Salvador'],
-      correta: 2,
-      selecao: null,
+      categoria: 'História',
+      top10: [
+        { nome: 'Ana', pontos: 85 },
+        { nome: 'Carlos', pontos: 70 },
+        { nome: 'João', pontos: 60 },
+      ]
     },
     {
-      id: 2,
-      texto: 'Quem pintou a Mona Lisa?',
-      respostas: ['Vincent Van Gogh', 'Pablo Picasso', 'Leonardo da Vinci', 'Michelangelo'],
-      correta: 2,
-      selecao: null,
+      categoria: 'Ciência',
+      top10: [
+        { nome: 'Mariana', pontos: 90 },
+        { nome: 'Lucas', pontos: 75 },
+        { nome: 'Pedro', pontos: 65 },
+      ]
     },
     {
-      id: 3,
-      texto: 'Quanto é 9 × 7?',
-      respostas: ['63', '72', '56', '49'],
-      correta: 0,
-      selecao: null,
-    },
+      categoria: 'Tecnologia',
+      top10: [
+        { nome: 'Camila', pontos: 95 },
+        { nome: 'Felipe', pontos: 80 },
+        { nome: 'Rafael', pontos: 70 },
+      ]
+    }
   ];
 
-  indiceAtual = 0;
-  mostrarResultados = false;
+  rankingGeral: RankingCategoria = {
+    categoria: 'Geral',
+    top10: [
+      { nome: 'Camila', pontos: 270 },
+      { nome: 'Mariana', pontos: 250 },
+      { nome: 'Ana', pontos: 230 },
+      { nome: 'Lucas', pontos: 220 },
+      { nome: 'Carlos', pontos: 210 }
+    ]
+  };
 
-  // Getters para contagem do resultado final
-  get quantidadeCorretas(): number {
-    return this.perguntas.filter(p => p.selecao === p.correta).length;
+  constructor() {}
+
+  ngOnInit(): void {}
+
+  iniciarJogo(categoria: string): void {
+    this.jogoIniciado = true;
+    this.jogoFinalizado = false;
+    this.perguntaAtual = 0;
+    this.respostaSelecionada = null;
+    this.respostasUsuario = [];
+
+    this.carregarPerguntas(categoria);
   }
 
-  get quantidadeErradas(): number {
-    return this.perguntas.filter(p => p.selecao !== null && p.selecao !== p.correta).length;
+  carregarPerguntas(categoria: string): void {
+    // Mock simples para 10 perguntas de acordo com categoria
+    this.perguntas = [];
+
+    for (let i = 1; i <= 10; i++) {
+      this.perguntas.push({
+        enunciado: `Pergunta ${i} de ${categoria}`,
+        respostas: [
+          { texto: 'Resposta A', correta: i % 4 === 1 },
+          { texto: 'Resposta B', correta: i % 4 === 2 },
+          { texto: 'Resposta C', correta: i % 4 === 3 },
+          { texto: 'Resposta D', correta: i % 4 === 0 }
+        ],
+        respostaCorretaIndex: (i % 4) - 1 >= 0 ? (i % 4) - 1 : 3
+      });
+    }
   }
 
-  get quantidadeNaoRespondidas(): number {
-    return this.perguntas.filter(p => p.selecao === null).length;
+  selecionarResposta(i: number): void {
+    this.respostaSelecionada = i;
   }
 
-  // Registra a resposta selecionada
-  selecionarResposta(indiceResposta: number): void {
-    this.perguntas[this.indiceAtual].selecao = indiceResposta;
-  }
-
-  // Avança para próxima pergunta ou finaliza o quiz
   proximaPergunta(): void {
-    if (this.perguntas[this.indiceAtual].selecao === null) {
-      // Opcional: mostrar alerta ou feedback ao usuário
-      return; // evita avançar sem seleção
-    }
+    if (this.respostaSelecionada === null) return;
 
-    if (this.indiceAtual < this.perguntas.length - 1) {
-      this.indiceAtual++;
+    this.respostasUsuario[this.perguntaAtual] = this.respostaSelecionada;
+    this.respostaSelecionada = null;
+
+    if (this.perguntaAtual + 1 < this.perguntas.length) {
+      this.perguntaAtual++;
     } else {
-      this.mostrarResultados = true;
+      this.finalizarJogo();
     }
   }
 
-  // Reinicia o quiz zerando dados
-  reiniciarQuiz(): void {
-    this.indiceAtual = 0;
-    this.mostrarResultados = false;
-    this.perguntas.forEach(p => (p.selecao = null));
+  finalizarJogo(): void {
+    this.jogoFinalizado = true;
+  }
+
+  reiniciarJogo(): void {
+    this.jogoIniciado = false;
+    this.jogoFinalizado = false;
+    this.perguntaAtual = 0;
+    this.respostaSelecionada = null;
+    this.respostasUsuario = [];
   }
 }

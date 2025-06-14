@@ -32,6 +32,11 @@ export const routes: Routes = [
           import('./funcionalidades/jogos/pergunta-resposta/pergunta-resposta.component').then(m => m.PerguntaRespostaComponent)
       },
       {
+        path: 'jogos/pergunta-resposta/cadastro',
+        loadComponent: () =>
+          import('./funcionalidades/jogos/pergunta-resposta/cadastro-pergunta-resposta/cadastro-pergunta.component').then(m => m.CadastroPerguntaComponent)
+      },
+      {
         path: 'quem-sou-eu',
         loadComponent: () =>
           import('./funcionalidades/quem-sou-eu/quem-sou-eu.component').then(m => m.QuemSouEuComponent)

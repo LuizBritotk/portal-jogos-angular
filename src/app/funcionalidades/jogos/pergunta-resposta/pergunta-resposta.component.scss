@@ -1,20 +1,15 @@
-// =========================
-// Variáveis
-// =========================
-$font: "Be Vietnam Pro", sans-serif;
-$primary-color: #1f8197;
-$correct-color: #42ff73;
-$error-color: #ffa2a2;
-$background-gradient: linear-gradient(
-  62deg,
-  rgba(149, 233, 227, 1) 30%,
-  rgba(31, 190, 210, 1) 41%,
-  rgba(11, 38, 50, 1) 85%
-);
+@use "sass:color";
 
-// =========================
-// Reset e base
-// =========================
+$font: "Be Vietnam Pro", sans-serif;
+
+// Variáveis fixas para Sass
+$primary-color: #1f8197;
+
+// Variáveis CSS para propriedades usadas diretamente no CSS, sem manipulação Sass
+$correct-color: var(--cor-correta);
+$error-color: var(--cor-errada);
+$background-gradient: var(--gradiente-fundo);
+
 * {
   box-sizing: border-box;
   font-family: $font;
@@ -50,13 +45,87 @@ body {
   }
 }
 
+.botao {
+  // Usando cor fixa para aplicar ajuste de cor
+  background-color: color.adjust($primary-color, $lightness: -10%);
+}
+
+.tela-inicial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  color: white;
+  text-align: center;
+  padding: 20px;
+
+  .texto-pergunta {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .lista-categorias {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      margin: 0;
+    }
+
+    button.botao-pergunta {
+      background-color: $primary-color;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 18px;
+      padding: 14px 28px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: color.adjust($primary-color, $lightness: -10%);
+      }
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+  }
+}
+
+.btn-cadastrar {
+  display: block;
+  margin: 0 auto 30px auto;
+  padding: 12px 24px;
+  background-color: $primary-color;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: color.adjust($primary-color, $lightness: -10%);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
 button {
   font-family: $font;
 }
 
-// =========================
-// Layout principal
-// =========================
 .pergunta-resposta.container {
   width: 100%;
   max-width: 600px;
@@ -71,6 +140,48 @@ button {
     margin: auto;
     padding: 20px;
   }
+
+  .texto-pergunta {
+    font-size: 22px;
+    font-weight: 600;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  .respostas-pergunta {
+    list-style: none;
+    padding: 0;
+
+    li {
+      margin-bottom: 12px;
+
+      button.botao-pergunta {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        background-color: $primary-color;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: color.adjust($primary-color, $lightness: -10%);
+        }
+
+        &:active {
+          transform: scale(0.98);
+        }
+
+        &:focus {
+          outline: 2px solid color.adjust($primary-color, $lightness: 15%);
+        }
+      }
+    }
+  }
 }
 
 .jogo {
@@ -84,9 +195,6 @@ button {
   }
 }
 
-// =========================
-// Pergunta
-// =========================
 .pergunta {
   display: flex;
   flex-direction: column;
@@ -98,9 +206,6 @@ button {
     margin-bottom: 20px;
   }
 
-  // =========================
-  // Respostas da pergunta
-  // =========================
   .respostas-pergunta {
     list-style: none;
     padding: 0;
@@ -113,7 +218,6 @@ button {
         display: none;
       }
 
-      // A label que será clicável
       .resposta-label {
         display: flex;
         align-items: center;
@@ -143,7 +247,6 @@ button {
         }
       }
 
-      // Estado selecionado: radio checked (quando usar input+label)
       input[type="radio"]:checked + .resposta-label {
         background-color: $primary-color;
         color: #ffffff;
@@ -154,7 +257,6 @@ button {
         }
       }
 
-      // Quando o li está marcado via atributo data-selecionada="true"
       &[data-selecionada="true"] .resposta-label {
         background-color: $primary-color;
         color: #fff;
@@ -165,9 +267,8 @@ button {
         }
       }
 
-      // Quando está selecionado e é a resposta correta, destacar verde
       &[data-selecionada="true"].correta .resposta-label {
-        background-color: $correct-color;
+        background-color: $correct-color; // variável CSS, sem ajuste
         border-color: $correct-color;
         color: #000;
 
@@ -177,18 +278,14 @@ button {
         }
       }
 
-      // Quando está selecionado mas é resposta errada, destacar vermelho
       &[data-selecionada="true"]:not(.correta) .resposta-label {
-        background-color: $error-color;
+        background-color: $error-color; // variável CSS, sem ajuste
         border-color: $error-color;
         color: #fff;
       }
     }
   }
 
-  // =========================
-  // Botão próxima / finalizar
-  // =========================
   .botao-pergunta {
     background-color: $primary-color;
     border: 0;
@@ -201,15 +298,12 @@ button {
     font-weight: 500;
 
     &:disabled {
-      background-color: darken($primary-color, 15%);
+      background-color: color.adjust($primary-color, $lightness: -15%);
       cursor: not-allowed;
     }
   }
 }
 
-// =========================
-// Resultado final
-// =========================
 .resultado[data-jogo-finalizado] {
   max-width: 80%;
   margin: 40px auto 0;
@@ -225,11 +319,11 @@ button {
     font-size: 16px;
 
     &.correta {
-      color: $correct-color;
+      color: $correct-color; // variável CSS
     }
 
     &.errada {
-      color: $error-color;
+      color: $error-color; // variável CSS
     }
   }
 
@@ -250,9 +344,6 @@ button {
   }
 }
 
-// =========================
-// Animações
-// =========================
 @keyframes result {
   0% {
     height: 0;
@@ -262,9 +353,6 @@ button {
   }
 }
 
-// =========================
-// Gabarito final com respostas corretas e erradas
-// =========================
 .gabarito-final {
   margin-top: 40px;
   background-color: rgba(#fff, 0.04);
@@ -300,17 +388,17 @@ button {
         transition: all 0.3s ease;
 
         &.correta {
-          background-color: $correct-color;
+          background-color: $correct-color; // variável CSS
           color: #000;
         }
 
         &.errada {
-          background-color: $error-color;
+          background-color: $error-color; // variável CSS
           color: #fff;
         }
 
         &.selecionada:not(.correta):not(.errada) {
-          background-color: lighten($primary-color, 20%);
+          background-color: color.adjust($primary-color, $lightness: 20%);
           color: #fff;
         }
       }

@@ -1,4 +1,5 @@
 /* === Variáveis Globais e Temas === */
+// Definidas como CSS custom properties para suporte ao modo escuro
 :root {
   /* Cores */
   --cor-primaria: #24292e;
@@ -69,7 +70,7 @@
   --transition-slow: 0.5s ease-in-out;
 }
 
-/* === Tema Escuro === */
+/* Tema Escuro */
 .tema-escuro {
   --cor-primaria: #c9d1d9;
   --cor-secundaria: #58a6ff;
@@ -274,8 +275,8 @@ a {
   background-color: transparent;
   color: $btn-fundo;
   border: 1px solid $btn-fundo;
-  // transition: background-color $transition-medium, color $transition-medium, border-color $transition-medium;
   box-shadow: none;
+  transition: background-color $transition-medium, color $transition-medium, border-color $transition-medium;
 
   &:hover,
   &:focus {
@@ -292,9 +293,8 @@ form {
   border-radius: $radius-lg;
   box-shadow: $sombra-forte;
   max-width: 600px;
-  width: 100%;  // para responsividade
+  width: 100%; // responsividade
   color: $cor-texto-primario;
-  // transition: background $transition-medium, color $transition-medium;
 }
 
 label {
@@ -324,7 +324,7 @@ textarea {
   border-radius: $radius-sm;
   background: $cor-fundo-escuro;
   color: $cor-texto-primario;
-  // transition: border-color $transition-fast, box-shadow $transition-fast;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
 
   &:focus {
     border-color: $cor-secundaria;
@@ -390,74 +390,42 @@ tbody tr:hover {
   background: $cor-link-hover;
 }
 
+/* === Container Centralizado === */
 .container-centralizado {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
-  padding: var(--spacing-xl);
+  padding: $spacing-lg;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-// === Utilitários ===
-@mixin transicao-suave($propriedades...) {
-  transition: $propriedades $transition-medium;
+/* === Utils === */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+  border: 0 !important;
 }
 
-@mixin sombra-padrao {
-  box-shadow: $sombra-suave;
-}
-
-@mixin sombra-elevada {
-  box-shadow: $sombra-forte;
-}
-
-// === Botão Flutuante ===
-.botao-flutuante {
-  position: fixed;
-  bottom: $spacing-xl;
-  right: $spacing-xl;
-  background: $btn-fundo;
-  color: $btn-texto;
-  padding: $spacing-sm $spacing-md;
-  border-radius: 50%;
-  font-size: 1.5rem;
-  line-height: 1;
-  z-index: 1000;
-  cursor: pointer;
-  @include sombra-elevada;
-  @include transicao-suave(background, transform);
-
-  &:hover {
-    background: $btn-fundo-hover;
-    transform: scale(1.05);
-  }
-
-  &:active {
-    transform: scale(0.95);
+/* === Mídia Queries === */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-primario);
   }
 }
 
-// === Animação para SVGs rotativos ===
-.svg-animado-rotativo {
-  animation: rotacionar 4s linear infinite;
-  transform-origin: center;
-  fill: var(--svg-bg-fill);
-  stroke: var(--svg-stroke);
-}
-
-@keyframes rotacionar {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
   }
-  to {
-    transform: rotate(360deg);
+  .botao {
+    width: 100%;
   }
-}
-
-// === Correção: Transições ativadas ===
-:root {
-  --transition-fast: 0.15s ease-in-out;
-  --transition-medium: 0.3s ease-in-out;
-  --transition-slow: 0.5s ease-in-out;
 }

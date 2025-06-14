@@ -1,0 +1,22 @@
+<main class="cadastro container">
+  <h2>Cadastro de Pergunta</h2>
+
+  <label>Enunciado:</label>
+  <input [(ngModel)]="novaPergunta.enunciado" placeholder="Digite a pergunta" />
+
+  <div class="resposta-item" *ngFor="let resposta of novaPergunta.respostas; let i = index">
+    <label>Resposta {{ i + 1 }}:</label>
+    <input [(ngModel)]="resposta.texto" placeholder="Digite a resposta" />
+    <label>
+      <input
+        type="radio"
+        name="respostaCorreta"
+        [value]="i"
+        [(ngModel)]="novaPergunta.respostaCorretaIndex"
+      />
+      Correta
+    </label>
+  </div>
+
+  <button (click)="salvarPergunta()">Salvar Pergunta</button>
+</main>

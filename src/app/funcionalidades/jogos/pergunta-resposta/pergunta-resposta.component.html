@@ -1,122 +1,108 @@
 <main class="pergunta-resposta container">
 
-  <!-- Botão de entrar como administrador -->
-  <div class="area-admin" *ngIf="!modoEdicao">
-    <button (click)="ativarModoEdicao()">Entrar como Administrador</button>
-  </div>
+  <!-- Tela inicial: escolha a categoria + botão para cadastro -->
+  <section *ngIf="!jogoIniciado" class="tela-inicial">
+    <button class="btn-cadastrar" routerLink="/jogos/pergunta-resposta/cadastro">
+      + Cadastrar nova pergunta
+    </button>
 
-  <!-- Botão para cadastrar nova pergunta -->
-  <div class="area-admin" *ngIf="modoEdicao">
-    <button (click)="abrirFormularioCadastro()">+ Nova Pergunta</button>
-    <button (click)="sairModoEdicao()">Sair do Modo Admin</button>
-  </div>
+    <h2 class="texto-pergunta">Escolha a categoria</h2>
 
-  <!-- Formulário de nova pergunta -->
-  <div *ngIf="formularioAberto" class="formulario-cadastro">
-    <h3>Nova Pergunta</h3>
+    <ul class="lista-categorias">
+      <li *ngFor="let cat of categorias">
+        <button class="botao-pergunta" (click)="iniciarJogo(cat)">
+          {{ cat }}
+        </button>
+      </li>
+    </ul>
+  </section>
 
-    <label>Enunciado:</label>
-    <input type="text" [(ngModel)]="novaPergunta.texto" placeholder="Digite a pergunta" />
-
-    <label>Respostas:</label>
-    <div *ngFor="let resposta of novaPergunta.respostas; let i = index">
-      <input [(ngModel)]="novaPergunta.respostas[i]" placeholder="Digite a resposta {{ i + 1 }}" />
-      <button (click)="removerResposta(i)">Remover</button>
-    </div>
-
-    <button (click)="adicionarResposta()">+ Adicionar Resposta</button>
-
-    <label>Índice da Resposta Correta:</label>
-    <input type="number" [(ngModel)]="novaPergunta.correta" min="0" [max]="novaPergunta.respostas.length - 1" />
-
-    <div class="acoes-formulario">
-      <button (click)="salvarPergunta()">Salvar</button>
-      <button (click)="fecharFormularioCadastro()">Cancelar</button>
-    </div>
-  </div>
-
-  <!-- Área principal do jogo -->
-  <div class="jogo" [class.jogo-iniciado]="!mostrarResultados">
-
-    <!-- Pergunta atual -->
-    <div *ngIf="!mostrarResultados" class="pergunta">
-      <h2 class="texto-pergunta">{{ perguntas[indiceAtual].texto }}</h2>
+  <!-- Tela do jogo em andamento -->
+  <section *ngIf="jogoIniciado && !jogoFinalizado" class="jogo jogo-iniciado">
+    <div class="pergunta">
+      <div class="texto-pergunta">{{ perguntas[perguntaAtual].enunciado }}</div>
 
       <ul class="respostas-pergunta">
-        <li
-          *ngFor="let resposta of perguntas[indiceAtual].respostas; let i = index"
-          [attr.data-selecionada]="perguntas[indiceAtual].selecao === i ? true : null"
-        >
-          <div class="resposta-wrapper">
-            <div
-              class="resposta-label"
-              (click)="selecionarResposta(i)"
-              [class.selecionada]="perguntas[indiceAtual].selecao === i"
-            >
-              <input
-                class="resposta-input"
-                type="radio"
-                [name]="'p_' + perguntas[indiceAtual].id"
-                [value]="i"
-                [checked]="perguntas[indiceAtual].selecao === i"
-                hidden
-              />
-              {{ resposta }}
-            </div>
+        <li *ngFor="let resp of perguntas[perguntaAtual].respostas; let i = index"
+            [attr.data-selecionada]="respostaSelecionada === i ? 'true' : null"
+            [class.correta]="jogoFinalizado && resp.correta"
+            [class.errada]="jogoFinalizado && respostaSelecionada === i && !resp.correta">
+
+          <input
+            type="radio"
+            [id]="'resp-'+i"
+            name="respostas"
+            [value]="i"
+            [checked]="respostaSelecionada === i"
+            (change)="selecionarResposta(i)"
+            hidden
+          />
+
+          <div
+            class="resposta-label"
+            (click)="selecionarResposta(i)"
+            tabindex="0"
+            (keydown.enter)="selecionarResposta(i)"
+            role="radio"
+            [attr.aria-checked]="respostaSelecionada === i"
+          >
+            {{ resp.texto }}
           </div>
         </li>
       </ul>
 
       <button
         class="botao-pergunta"
+        [disabled]="respostaSelecionada === null"
         (click)="proximaPergunta()"
-        [disabled]="perguntas[indiceAtual].selecao === null"
       >
-        {{ indiceAtual < perguntas.length - 1 ? 'Próxima' : 'Finalizar' }}
+        {{ perguntaAtual + 1 < perguntas.length ? 'Próximo' : 'Finalizar' }}
       </button>
     </div>
+  </section>
 
-    <!-- Resultados finais -->
-    <div *ngIf="mostrarResultados" class="resultado" data-jogo-finalizado>
-      <div class="item-resultado correta">
-        <span class="contagem-resultado">{{ quantidadeCorretas }}</span>
-        <span class="texto-resultado">Corretas</span>
-      </div>
-      <div class="item-resultado errada">
-        <span class="contagem-resultado">{{ quantidadeErradas }}</span>
-        <span class="texto-resultado">Erradas</span>
-      </div>
-      <div class="item-resultado">
-        <span class="contagem-resultado">{{ quantidadeNaoRespondidas }}</span>
-        <span class="texto-resultado">Não Respondidas</span>
-      </div>
+  <!-- Tela do resultado final -->
+  <section *ngIf="jogoFinalizado" class="resultado" data-jogo-finalizado>
+    <h2 class="texto-pergunta">Resultado Final</h2>
 
-      <button class="botao-reiniciar" (click)="reiniciarQuiz()">Reiniciar Quiz</button>
+    <div
+      class="item-resultado"
+      *ngFor="let p of perguntas; let idx = index"
+      [class.correta]="respostasUsuario[idx] === p.respostaCorretaIndex"
+      [class.errada]="respostasUsuario[idx] !== p.respostaCorretaIndex"
+    >
+      <div>Pergunta {{ idx + 1 }}: {{ p.enunciado }}</div>
+      <div>
+        Sua resposta:
+        {{ p.respostas[respostasUsuario[idx]].texto || 'Nenhuma' }}
+        <span *ngIf="respostasUsuario[idx] === p.respostaCorretaIndex" class="correta">✔</span>
+        <span *ngIf="respostasUsuario[idx] !== p.respostaCorretaIndex" class="errada">✘</span>
+      </div>
     </div>
 
-    <!-- Gabarito final -->
-    <div *ngIf="mostrarResultados" class="gabarito-final">
-      <h3 class="titulo-gabarito">Respostas Corretas</h3>
+    <h3 class="titulo-ranking">Ranking (Fake)</h3>
 
-      <div *ngFor="let pergunta of perguntas; let idx = index" class="bloco-gabarito">
-        <p class="enunciado-gabarito">
-          {{ idx + 1 }}. {{ pergunta.texto }}
-        </p>
-
+    <div class="gabarito-final">
+      <div class="bloco-gabarito" *ngFor="let ranking of rankingsPorCategoria">
+        <div class="titulo-gabarito">{{ ranking.categoria }}</div>
         <ul class="lista-respostas">
-          <ng-container *ngFor="let resposta of pergunta.respostas; let i = index">
-            <li
-              *ngIf="i === pergunta.correta || i === pergunta.selecao"
-              [class.correta]="i === pergunta.correta"
-              [class.errada]="pergunta.selecao === i && i !== pergunta.correta"
-              [class.selecionada]="pergunta.selecao === i"
-            >
-              {{ resposta }}
-            </li>
-          </ng-container>
+          <li *ngFor="let user of ranking.top10">
+            {{ user.nome }} - {{ user.pontos }} pts
+          </li>
+        </ul>
+      </div>
+
+      <div class="bloco-gabarito">
+        <div class="titulo-gabarito">Ranking Geral</div>
+        <ul class="lista-respostas">
+          <li *ngFor="let user of rankingGeral.top10">
+            {{ user.nome }} - {{ user.pontos }} pts
+          </li>
         </ul>
       </div>
     </div>
 
-  </div>
+    <button class="botao-reiniciar" (click)="reiniciarJogo()">Reiniciar</button>
+  </section>
+
 </main>
