@@ -1,5 +1,5 @@
 :root {
-  --cor-primaria: #1f2a36;
+  --cor-primaria: #2a3b4c;
   --cor-secundaria: #2b8bce;
   --cor-terciaria: #27ae60;
   --cor-alerta: #e74c3c;
@@ -9,11 +9,11 @@
   --cor-fundo-escuro: #e3e9ef;
   --cor-texto-primario: #1a1a1a;
   --cor-texto-secundario: #6b6b6b;
-  --cor-borda: #dcdfe3;
+  --cor-borda: #0d1117;
   --cor-link: #2b8bce;
   --cor-link-hover: #1d6ea5;
-  --btn-fundo: linear-gradient(135deg, #2b8bce, #1d6ea5);
-  --btn-fundo-hover: linear-gradient(135deg, #3ba3e0, #267aa7);
+  --btn-fundo: linear-gradient(135deg, #c3ccd3, #1d6ea5);
+  --btn-fundo-hover: #7d96ad;
   --btn-cor-texto: #ffffff;
   --btn-fundo-hover-simples: #267aa7;
   --btn-texto: #ffffff;
@@ -27,7 +27,7 @@
   --cor-hover: rgba(0, 0, 0, 0.05);
   --cor-hover-escuro: rgba(0, 0, 0, 0.08);
   --cor-hover-borda: #dcdfe3;
-  --cor-formulario: linear-gradient(135deg, #ffffff, #f3f6fa);
+  --cor-formulario: #d4d7db;
   --cor-labels: linear-gradient(135deg, #f3f6fa, #e7edf3);
   --svg-bg-fill: #4c4c4c;
   --svg-stroke: #1f2a36;
@@ -64,17 +64,6 @@
 
 /* Tema Escuro */
 .tema-escuro {
-  --cor-fundo: #0d1117;
-  --cor-texto-primario: #c9d1d9;
-  --cor-label: #ffffff;
-  --cor-formulario: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  --cor-labels: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-  --svg-bg-fill: #ffffffec;
-  --svg-stroke: #3b3b3b;
-  --svg-text-fill: #000000;
-  --cor-correta: #2ecc71;
-  --cor-errada: #e74c3c;
-  --gradiente-fundo: linear-gradient(135deg, #161b22, #0d1117);
   --cor-primaria: #c9d1d9;
   --cor-secundaria: #58a6ff;
   --cor-terciaria: #3fb950;
@@ -85,12 +74,11 @@
   --cor-fundo-secundario: #2a2a2a;
   --cor-texto-primario: #c9d1d9;
   --cor-texto-secundario: #8b949e;
-  --cor-label: #ffffff;
   --cor-borda: #30363d;
   --cor-link: #58a6ff;
   --cor-link-hover: #1f6feb;
   --btn-fundo: linear-gradient(135deg, #00c6ff, #0072ff);
-  --btn-fundo-hover: #2ea043;
+  --btn-fundo-hover: #466acc;
   --btn-texto: #ffffff;
   --tabela-fundo-cabecalho: #161b22;
   --tabela-texto-cabecalho: #c9d1d9;
@@ -106,6 +94,8 @@
   --svg-bg-fill: #ffffffec;
   --svg-stroke: rgb(59, 58, 58);
   --svg-text-fill: black;
+  --cor-label: #ffffff;
+  --gradiente-fundo: linear-gradient(135deg, #161b22, #0d1117);
 }
 
 /* === Variáveis SCSS baseadas em CSS Custom Properties === */
@@ -240,39 +230,28 @@ a {
     outline: none;
   }
 }
-
-/* === Botões === */
-.botao {
-  display: inline-block;
-  padding: $spacing-sm $spacing-md;
+button {
+  // margin-top: var(--spacing-xl);
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: 1rem;
-  font-weight: $font-weight-semibold;
-  border-radius: $radius-md;
-  background: $btn-fundo;
-  color: $btn-texto;
+  font-weight: var(--font-weight-semibold);
+  background-color: var(--primary);
+  border: none;
+  border-radius: var(--radius-md);
+  color: var(--btn-texto);
   cursor: pointer;
-  user-select: none;
-  text-align: center;
-  white-space: nowrap;
-  border: 1px solid transparent;
-  box-shadow: $sombra-suave;
-  transition: background $transition-medium, box-shadow $transition-medium, color $transition-medium;
+  transition: background-color var(--transition-fast), transform var(--transition-fast);
 
-  &:hover,
-  &:focus {
-    background: $btn-fundo-hover;
-    outline: none;
-    box-shadow: $sombra-moderada;
+  &:hover {
+    background-color: var(--btn-fundo-hover);
   }
 
-  &:disabled,
-  &[disabled] {
-    opacity: 0.6;
-    cursor: not-allowed;
-    box-shadow: none;
-    transition: none;
+  &:active {
+    transform: scale(0.98);
   }
 }
+
+
 
 .botao-secundario {
   background-color: transparent;
@@ -430,5 +409,66 @@ tbody tr:hover {
   }
   .botao {
     width: 100%;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  .modal {
+    background-color: var(--cor-fundo-card, #fff);
+    color: var(--cor-texto-primario, #000);
+    padding: var(--spacing-xl, 2rem);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: var(--sombra-forte, 0 8px 24px rgba(0, 0, 0, 0.2));
+    max-width: 90%;
+    width: 400px;
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+
+    .modal-titulo {
+      font-size: 1.5rem;
+      font-weight: var(--font-weight-bold, 700);
+      margin-bottom: var(--spacing-md, 1rem);
+    }
+
+    .modal-mensagem {
+      font-size: 1rem;
+      color: var(--cor-texto-secundario, #555);
+      margin-bottom: var(--spacing-lg, 1.5rem);
+    }
+
+    .botao-fechar {
+      padding: var(--spacing-sm, 0.5rem) var(--spacing-lg, 1.5rem);
+      font-size: 1rem;
+      background-color: var(--btn-fundo, #007bff);
+      color: var(--btn-texto, #fff);
+      border: none;
+      border-radius: var(--radius-md, 8px);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--btn-fundo-hover, #0056b3);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

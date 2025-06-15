@@ -1,11 +1,10 @@
-
 <main class="jogo-da-velha container">
   <h1 class="titulo mb-3">Jogo da Velha</h1>
   <p class="subtitulo mb-4">Configure seu jogo e divirta-se com um visual moderno!</p>
 
-  <form *ngIf="!jogoIniciado" class="config-form mb-5" (ngSubmit)="iniciarJogo()">
+  <div *ngIf="!jogoIniciado" class="config-form mb-5">
     <div class="form-group">
-      <label for="jogador1" class="form-label">Jogador 1</label>
+      <div class="form-label">Jogador 1</div>
       <input
         id="jogador1"
         type="text"
@@ -19,7 +18,7 @@
     </div>
 
     <div class="form-group">
-      <label for="modoJogo" class="form-label">Modo de jogo</label>
+      <div class="form-label">Modo de jogo</div>
       <select
         id="modoJogo"
         [(ngModel)]="modoJogo"
@@ -33,7 +32,7 @@
     </div>
 
     <div *ngIf="modoJogo === 'pvp'" class="form-group">
-      <label for="jogador2" class="form-label">Jogador 2</label>
+      <div class="form-label">Jogador 2</div>
       <input
         id="jogador2"
         type="text"
@@ -47,7 +46,7 @@
     </div>
 
     <div *ngIf="modoJogo === 'bot'" class="form-group">
-      <label for="nivelBot" class="form-label">Nível do Bot</label>
+      <div class="form-label">Nível do Bot</div>
       <select
         id="nivelBot"
         [(ngModel)]="nivelBot"
@@ -78,11 +77,10 @@
     </fieldset>
 
     <div class="botoes-form">
-      <button type="submit" class="botao botao-iniciar">Começar</button>
+      <button class="botao botao-iniciar" (click)="iniciarJogo()">Começar</button>
     </div>
-  </form>
+  </div>
 
-  <!-- TABULEIRO E CONTROLE DE JOGO -->
   <section *ngIf="jogoIniciado" class="jogo-container">
     <div class="info-jogo">
       <h2 *ngIf="!vencedor">Vez de: {{ jogadorAtual === 'O' ? jogador1 : jogador2 }}</h2>
@@ -90,13 +88,12 @@
       <h2 *ngIf="vencedor === 'Empate'">🤝 Empate!</h2>
     </div>
 
-   <div
+    <div
       class="tabuleiro"
       [ngClass]="'tamanho-' + lado"
       [style.gridTemplateColumns]="'repeat(' + lado + ', auto)'"
       [style.gridTemplateRows]="'repeat(' + lado + ', auto)'"
     >
-
       <button
         *ngFor="let celula of tabuleiro; index as i"
         class="casa"
@@ -117,4 +114,12 @@
       <button class="botao botao-resetar" (click)="reiniciar()">Resetar Jogo</button>
     </div>
   </section>
+
+  <div class="modal-overlay" *ngIf="exibirModal">
+    <div class="modal">
+      <h2 class="modal-titulo">Atenção</h2>
+      <p class="modal-mensagem">{{ mensagemModal }}</p>
+      <button class="botao botao-fechar" (click)="fecharModal()">OK</button>
+    </div>
+  </div>
 </main>

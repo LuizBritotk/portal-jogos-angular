@@ -1,0 +1,130 @@
+
+.quem-sou-eu {
+  padding: 2rem;
+  font-family: var(--font-family-sans);
+  color: var(--cor-texto-primaria);
+
+  .titulo {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: var(--cor-titulo);
+  }
+
+  .subtitulo {
+    font-size: 1.25rem;
+    color: var(--cor-texto-secundaria);
+    margin-bottom: 2rem;
+    max-width: 800px;
+  }
+
+  .secao-titulo {
+    font-size: 1.75rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    color: var(--cor-secundaria);
+    border-bottom: 2px solid var(--cor-borda);
+    padding-bottom: 0.25rem;
+  }
+
+  section {
+    margin-bottom: 2rem;
+  }
+
+  ul {
+    list-style: disc inside;
+    padding-left: 1rem;
+    line-height: 1.8;
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    strong {
+      color: var(--cor-destaque);
+    }
+  }
+
+  .tech-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    li {
+      background: var(--cor-fundo-card);
+      padding: 1rem;
+      border-radius: var(--borda-raio);
+      box-shadow: var(--sombra-suave);
+      transition: background 0.3s;
+
+      &:hover {
+        background: var(--cor-fundo-card-hover);
+      }
+    }
+  }
+
+  .perfil {
+    text-align: left;
+
+    @media (min-width: 768px) {
+      text-align: center;
+    }
+  }
+}
+.parallax-wrapper {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+
+  section[data-section] {
+    min-height: 100vh;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-principal);
+    color: var(--texto-principal);
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &:nth-child(even) {
+      background-color: var(--bg-secundario);
+    }
+
+    .secao-titulo {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      color: var(--destaque);
+    }
+
+    ul, p {
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    strong {
+      color: var(--cor-primaria);
+    }
+
+    .tech-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    .empresas-clientes-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .bloco h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      color: var(--cor-primaria);
+    }
+  }
+}

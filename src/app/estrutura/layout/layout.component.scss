@@ -30,6 +30,11 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+  transition: transform 0.3s ease-in-out;
+
+  &.oculto {
+    transform: translateY(-100%);
+  }
 
   .logo-site {
     text-decoration: none;
@@ -50,6 +55,8 @@ body {
       font-size: 0.8rem;
       color: var(--cor-texto-secundario);
     }
+
+
   }
 
   .menu-principal {

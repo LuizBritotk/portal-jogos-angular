@@ -13,9 +13,12 @@ export class JogoDaVelhaComponent {
   jogador1 = '';
   jogador2 = '';
   modoJogo = 'pvp';
-  nivelBot = 'facil'; // novo campo para nível do bot
+  nivelBot = 'facil';
   tamanho = 9;
   opcoesQuadrados = [9, 16, 25, 36, 49, 64];
+
+  exibirModal = false;
+  mensagemModal = '';
 
   jogoIniciado = false;
   tabuleiro: string[] = [];
@@ -23,19 +26,28 @@ export class JogoDaVelhaComponent {
   lado = 3;
   vencedor: string | null = null;
 
-  // Saldo de pontos
   pontosJogador1 = 0;
   pontosJogador2 = 0;
 
-  // Getter para acessar Math no template HTML
   get Math() {
     return Math;
   }
 
-  /**
-   * Inicia o jogo: configura jogadores, tabuleiro, e reseta variáveis
-   */
+  abrirModal(mensagem: string) {
+    this.mensagemModal = mensagem;
+    this.exibirModal = true;
+  }
+
+  fecharModal() {
+    this.exibirModal = false;
+  }
+
   iniciarJogo() {
+    if (!this.jogador1.trim() || (this.modoJogo === 'pvp' && !this.jogador2.trim())) {
+      this.abrirModal('Preencha todos os nomes dos jogadores.');
+      return;
+    }
+
     if (this.modoJogo === 'bot') {
       this.jogador2 = 'Bot';
     }
@@ -51,9 +63,6 @@ export class JogoDaVelhaComponent {
     localStorage.setItem('tamanho', this.tamanho.toString());
   }
 
-  /**
-   * Realiza uma jogada no índice dado, verifica vencedor, alterna jogador, e se for bot faz jogada
-   */
   jogar(index: number) {
     if (this.tabuleiro[index] || this.vencedor) return;
 
@@ -73,13 +82,10 @@ export class JogoDaVelhaComponent {
     this.jogadorAtual = this.jogadorAtual === 'O' ? 'X' : 'O';
 
     if (this.modoJogo === 'bot' && this.jogadorAtual === 'X') {
-      this.jogadaBot();
+      setTimeout(() => this.jogadaBot(), 300);
     }
   }
 
-  /**
-   * Realiza a jogada do bot de acordo com o nível selecionado (fácil: aleatório, médio: bloqueia, difícil: minimax)
-   */
   jogadaBot() {
     if (this.vencedor) return;
 
@@ -98,9 +104,6 @@ export class JogoDaVelhaComponent {
     }
   }
 
-  /**
-   * Jogada aleatória para nível fácil
-   */
   jogadaBotFacil() {
     const casasVazias = this.tabuleiro
       .map((v, i) => (v === '' ? i : -1))
@@ -112,42 +115,25 @@ export class JogoDaVelhaComponent {
     this.jogar(aleatorio);
   }
 
-  /**
-   * Jogada para nível médio: tenta bloquear vitória do jogador adversário, senão joga aleatório
-   */
   jogadaBotMedio() {
-    // Tenta bloquear a jogada do jogador 'O' (usuário)
     const bloqueio = this.encontrarJogadaVitoria('O');
     if (bloqueio !== -1) {
       this.jogar(bloqueio);
       return;
     }
-    // Se não tem bloqueio, joga aleatório
     this.jogadaBotFacil();
   }
 
-  /**
-   * Jogada para nível difícil: utiliza minimax para melhor jogada
-   */
   jogadaBotDificil() {
     const melhorMovimento = this.minimax(this.tabuleiro, 'X').indice;
     this.jogar(melhorMovimento);
   }
 
-  /**
-   * Atualiza pontos dos jogadores após vitória
-   */
   atualizarPontos(vencedor: string) {
-    if (vencedor === this.jogador1) {
-      this.pontosJogador1++;
-    } else if (vencedor === this.jogador2) {
-      this.pontosJogador2++;
-    }
+    if (vencedor === this.jogador1) this.pontosJogador1++;
+    else if (vencedor === this.jogador2) this.pontosJogador2++;
   }
 
-  /**
-   * Verifica se há jogada vencedora para o jogador dado e retorna o índice da jogada, ou -1 se não existir
-   */
   encontrarJogadaVitoria(jogador: string): number {
     for (let i = 0; i < this.tabuleiro.length; i++) {
       if (this.tabuleiro[i] === '') {
@@ -162,32 +148,60 @@ export class JogoDaVelhaComponent {
     return -1;
   }
 
-  /**
-   * Verifica se o jogador dado venceu no estado atual do tabuleiro sem alterar o estado principal
-   */
   verificarVencedorParaJogador(jogador: string): boolean {
     const linhas = [];
-
-    // Linhas horizontais
-    for (let i = 0; i < this.tamanho; i += this.lado) {
-      linhas.push(this.tabuleiro.slice(i, i + this.lado));
-    }
-
-    // Colunas verticais
-    for (let i = 0; i < this.lado; i++) {
-      linhas.push(this.tabuleiro.filter((_, index) => index % this.lado === i));
-    }
-
-    // Diagonais
+    for (let i = 0; i < this.tamanho; i += this.lado) linhas.push(this.tabuleiro.slice(i, i + this.lado));
+    for (let i = 0; i < this.lado; i++) linhas.push(this.tabuleiro.filter((_, index) => index % this.lado === i));
     linhas.push(this.tabuleiro.filter((_, index) => index % (this.lado + 1) === 0));
     linhas.push(this.tabuleiro.filter((_, index) => index % (this.lado - 1) === 0 && index !== 0 && index !== this.tamanho - 1));
+    return linhas.some(linha => linha.every(cell => cell === jogador));
+  }
+
+  verificarVencedor(): boolean {
+    const winLength = 3;
+    const simbolo = this.jogadorAtual;
+    const get = (x: number, y: number) => this.tabuleiro[y * this.lado + x];
+
+    for (let y = 0; y < this.lado; y++) {
+      for (let x = 0; x < this.lado; x++) {
+        if (
+          x <= this.lado - winLength &&
+          Array.from({ length: winLength }, (_, i) => get(x + i, y)).every(cell => cell === simbolo)
+        ) return true;
+
+        if (
+          y <= this.lado - winLength &&
+          Array.from({ length: winLength }, (_, i) => get(x, y + i)).every(cell => cell === simbolo)
+        ) return true;
+
+        if (
+          x <= this.lado - winLength && y <= this.lado - winLength &&
+          Array.from({ length: winLength }, (_, i) => get(x + i, y + i)).every(cell => cell === simbolo)
+        ) return true;
+
+        if (
+          x >= winLength - 1 && y <= this.lado - winLength &&
+          Array.from({ length: winLength }, (_, i) => get(x - i, y + i)).every(cell => cell === simbolo)
+        ) return true;
+      }
+    }
+
+    return false;
+  }
+
+  verificarVencedorParaJogadorMinimax(tabuleiroAtual: string[], jogador: string): boolean {
+    const lado = Math.sqrt(tabuleiroAtual.length);
+    const tamanho = tabuleiroAtual.length;
+    const linhas = [];
+
+    for (let i = 0; i < tamanho; i += lado) linhas.push(tabuleiroAtual.slice(i, i + lado));
+    for (let i = 0; i < lado; i++) linhas.push(tabuleiroAtual.filter((_, index) => index % lado === i));
+    linhas.push(tabuleiroAtual.filter((_, index) => index % (lado + 1) === 0));
+    linhas.push(tabuleiroAtual.filter((_, index) => index % (lado - 1) === 0 && index !== 0 && index !== tamanho - 1));
 
     return linhas.some(linha => linha.every(cell => cell === jogador));
   }
 
-  /**
-   * Função minimax para avaliar todas as jogadas possíveis e retornar a melhor jogada para o bot no nível difícil
-   */
   minimax(tabuleiroAtual: string[], jogador: string): { pontuacao: number; indice: number } {
     const jogadorMax = 'X';
     const jogadorMin = 'O';
@@ -196,113 +210,22 @@ export class JogoDaVelhaComponent {
       .map((v, i) => (v === '' ? i : -1))
       .filter(i => i !== -1);
 
-    if (this.verificarVencedorParaJogadorMinimax(tabuleiroAtual, jogadorMax)) {
-      return { pontuacao: 10, indice: -1 };
-    } else if (this.verificarVencedorParaJogadorMinimax(tabuleiroAtual, jogadorMin)) {
-      return { pontuacao: -10, indice: -1 };
-    } else if (casasVazias.length === 0) {
-      return { pontuacao: 0, indice: -1 };
-    }
+    if (this.verificarVencedorParaJogadorMinimax(tabuleiroAtual, jogadorMax)) return { pontuacao: 10, indice: -1 };
+    if (this.verificarVencedorParaJogadorMinimax(tabuleiroAtual, jogadorMin)) return { pontuacao: -10, indice: -1 };
+    if (casasVazias.length === 0) return { pontuacao: 0, indice: -1 };
 
-    const movimentos: { indice: number; pontuacao: number }[] = [];
-
-    for (const i of casasVazias) {
+    const movimentos = casasVazias.map(i => {
       const novoTabuleiro = [...tabuleiroAtual];
       novoTabuleiro[i] = jogador;
-
       const resultado = this.minimax(novoTabuleiro, jogador === jogadorMax ? jogadorMin : jogadorMax);
-      movimentos.push({ indice: i, pontuacao: resultado.pontuacao });
-    }
+      return { indice: i, pontuacao: resultado.pontuacao };
+    });
 
-    let melhorMovimento;
-    if (jogador === jogadorMax) {
-      let melhorPontuacao = -Infinity;
-      for (const mov of movimentos) {
-        if (mov.pontuacao > melhorPontuacao) {
-          melhorPontuacao = mov.pontuacao;
-          melhorMovimento = mov;
-        }
-      }
-    } else {
-      let melhorPontuacao = Infinity;
-      for (const mov of movimentos) {
-        if (mov.pontuacao < melhorPontuacao) {
-          melhorPontuacao = mov.pontuacao;
-          melhorMovimento = mov;
-        }
-      }
-    }
-
-    return melhorMovimento!;
+    return jogador === jogadorMax
+      ? movimentos.reduce((a, b) => (b.pontuacao > a.pontuacao ? b : a))
+      : movimentos.reduce((a, b) => (b.pontuacao < a.pontuacao ? b : a));
   }
 
-  /**
-   * Verifica se o jogador dado venceu no tabuleiro passado como parâmetro (usado pelo minimax)
-   */
-  verificarVencedorParaJogadorMinimax(tabuleiroAtual: string[], jogador: string): boolean {
-    const lado = Math.sqrt(tabuleiroAtual.length);
-    const tamanho = tabuleiroAtual.length;
-    const linhas = [];
-
-    // Linhas horizontais
-    for (let i = 0; i < tamanho; i += lado) {
-      linhas.push(tabuleiroAtual.slice(i, i + lado));
-    }
-
-    // Colunas verticais
-    for (let i = 0; i < lado; i++) {
-      linhas.push(tabuleiroAtual.filter((_, index) => index % lado === i));
-    }
-
-    // Diagonais
-    linhas.push(tabuleiroAtual.filter((_, index) => index % (lado + 1) === 0));
-    linhas.push(tabuleiroAtual.filter((_, index) => index % (lado - 1) === 0 && index !== 0 && index !== tamanho - 1));
-
-    return linhas.some(linha => linha.every(cell => cell === jogador));
-  }
-
-  /**
-   * Verifica se o jogador atual venceu no tabuleiro atual
-   */
-  verificarVencedor(): boolean {
-  const winLength = 3; // ou Math.min(3, this.lado); se quiser adaptar para tabuleiros menores
-  const simbolo = this.jogadorAtual;
-
-  const get = (x: number, y: number) => this.tabuleiro[y * this.lado + x];
-
-  for (let y = 0; y < this.lado; y++) {
-    for (let x = 0; x < this.lado; x++) {
-      if (
-        x <= this.lado - winLength &&
-        Array.from({ length: winLength }, (_, i) => get(x + i, y)).every(cell => cell === simbolo)
-      ) return true;
-
-      if (
-        y <= this.lado - winLength &&
-        Array.from({ length: winLength }, (_, i) => get(x, y + i)).every(cell => cell === simbolo)
-      ) return true;
-
-      if (
-        x <= this.lado - winLength &&
-        y <= this.lado - winLength &&
-        Array.from({ length: winLength }, (_, i) => get(x + i, y + i)).every(cell => cell === simbolo)
-      ) return true;
-
-      if (
-        x >= winLength - 1 &&
-        y <= this.lado - winLength &&
-        Array.from({ length: winLength }, (_, i) => get(x - i, y + i)).every(cell => cell === simbolo)
-      ) return true;
-    }
-  }
-
-  return false;
-}
-
-
-  /**
-   * Reinicia o jogo, reseta estado e pontos se desejar
-   */
   reiniciar() {
     this.jogoIniciado = false;
     this.tabuleiro = [];

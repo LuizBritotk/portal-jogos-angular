@@ -1,20 +1,15 @@
 @use "sass:color";
 
-* {
-  box-sizing: border-box;
-  font-family: var(--font-family-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 body {
   margin: 0;
-  padding: 0 10vh;
+  padding: 0 5vw;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   font-family: var(--font-family-sans);
-  overflow: hidden;
+  overflow-x: hidden;
   display: flex;
+  justify-content: center;
+  align-items: center;
   background: var(--gradiente-fundo);
   position: relative;
 
@@ -27,7 +22,7 @@ body {
     background-size: cover;
     background-attachment: fixed;
     background-position: center;
-    transition: 0.3s;
+    transition: var(--transition-medium);
   }
 
   @media (max-width: 980px), (max-height: 580px) {
@@ -39,8 +34,10 @@ body {
   background: var(--btn-fundo);
   color: var(--btn-texto);
   border-radius: var(--radius-md);
-  padding: var(--spacing-sm) var(--spacing-md);
+  padding: 0.6rem 1.2rem;
   font-weight: var(--font-weight-semibold);
+  font-size: 0.95rem;
+  border: 1px solid var(--cor-borda);
   box-shadow: var(--sombra-suave);
   transition: background var(--transition-medium);
 
@@ -58,15 +55,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 60vh;
-  color: white;
+  min-height: 55vh;
+  color: var(--btn-texto);
   text-align: center;
-  padding: 20px;
+  padding: var(--spacing-md);
 
   .texto-pergunta {
-    font-size: 28px;
-    font-weight: 700;
-    margin-bottom: 30px;
+    font-size: 1.5rem;
+    font-weight: var(--font-weight-bold);
+    margin-bottom: var(--spacing-xl);
   }
 
   .lista-categorias {
@@ -74,7 +71,7 @@ body {
     padding: 0;
     margin: 0;
     display: flex;
-    gap: 16px;
+    gap: var(--spacing-md);
     flex-wrap: wrap;
     justify-content: center;
 
@@ -84,17 +81,16 @@ body {
 
     button.botao-pergunta {
       background-color: var(--cor-primaria);
-      border: none;
-
+      border: 1px solid var(--cor-borda);
       font-weight: 600;
-      font-size: 18px;
-      padding: 14px 28px;
-      border-radius: 8px;
+      font-size: 1rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius-md);
       cursor: pointer;
       transition: background-color 0.3s;
 
       &:hover {
-        background-color: var(--btn-fundo-hover-simples);
+        background-color: var(--btn-fundo-hover);
       }
 
       &:active {
@@ -106,18 +102,17 @@ body {
 
 .btn-cadastrar {
   display: block;
-  margin: 0 auto 30px auto;
-  padding: 12px 24px;
+  margin: 0 auto var(--spacing-lg) auto;
+  padding: 0.75rem 1.5rem;
   background-color: var(--cor-primaria);
-  // color: white;
   font-weight: 600;
-  border: none;
-  border-radius: 8px;
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: var(--btn-fundo-hover-simples);
+    background-color: var(--btn-fundo-hover);
   }
 
   &:active {
@@ -131,271 +126,77 @@ button {
 
 .pergunta-resposta.container {
   width: 100%;
-  max-width: 600px;
-  margin: 10vh auto;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 0 80px rgba(0, 0, 0, 1), 0 0 0 16px rgba(152, 236, 255, 0.1);
-  background-color: rgba(255, 255, 255, 0.05);
+  max-width: 540px;
+  margin: 6vh auto;
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  background-color: var(--cor-formulario);
+  box-shadow: var(--sombra-forte);
+  border: 1px solid var(--cor-borda);
 
   @media (max-width: 980px), (max-height: 580px) {
     max-width: 100%;
     margin: auto;
-    padding: 20px;
+    padding: var(--spacing-md);
   }
 
-  .texto-pergunta {
-    font-size: 22px;
-    font-weight: 600;
-    text-align: center;
-    // color: #fff;
-    margin-bottom: 20px;
-  }
-
-  .respostas-pergunta {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 12px;
-
-      button.botao-pergunta {
-        width: 100%;
-        padding: 14px 20px;
-        font-size: 16px;
-        font-weight: bold;
-        background-color: var(--cor-primaria);
-        color: #fff;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-
-        &:hover {
-          background-color: var(--btn-fundo-hover-simples);
-        }
-
-        &:active {
-          transform: scale(0.98);
-        }
-
-        &:focus {
-          outline: 2px solid var(--cor-secundaria);
-        }
-      }
-    }
-  }
-}
-
-.jogo {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-
-  &.jogo-iniciado {
-    max-width: 1200px;
-    margin: 8vh auto;
-  }
-}
-
-.pergunta {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-
-  .texto-pergunta {
-    font-size: 24px;
-    color: #ffffff;
-    margin-bottom: 20px;
-  }
-
-  .respostas-pergunta {
-    list-style: none;
-    padding: 0;
-
-    li {
-      margin-bottom: 10px;
-      position: relative;
-
-      input[type="radio"] {
-        display: none;
-      }
-
-      .resposta-label {
-        display: flex;
-        align-items: center;
-        padding: 14px 20px;
-        font-size: 16px;
-        border-radius: 6px;
-        font-weight: bold;
-        border: 2px solid var(--cor-primaria);
-        background-color: #ffffff;
-        color: #000000;
-        cursor: pointer;
-        position: relative;
-        transition: all 0.3s ease;
-
-        &::before {
-          content: "";
-          position: absolute;
-          right: 16px;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 18px;
-          height: 18px;
-          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' stroke='%231f8197' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
-          background-size: cover;
-          opacity: 0;
-          transition: opacity 0.3s, transform 0.3s;
-        }
-      }
-
-      input[type="radio"]:checked + .resposta-label,
-      &[data-selecionada="true"] .resposta-label {
-        background-color: var(--cor-primaria);
-        color: #fff;
-
-        &::before {
-          opacity: 1;
-          transform: translateY(-50%);
-        }
-      }
-
-      &[data-selecionada="true"].correta .resposta-label {
-        background-color: var(--cor-correta);
-        border-color: var(--cor-correta);
-        color: #000;
-
-        &::before {
-          opacity: 1;
-          transform: translateX(-24px) translateY(-50%);
-        }
-      }
-
-      &[data-selecionada="true"]:not(.correta) .resposta-label {
-        background-color: var(--cor-errada);
-        border-color: var(--cor-errada);
-        color: #fff;
-      }
-    }
-  }
-
-  .botao-pergunta {
-    background-color: var(--cor-primaria);
-    border: 0;
-    padding: 14px 26px;
-    color: #fff;
-    border-radius: 4px;
-    margin-top: 20px;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: 500;
-
-    &:disabled {
-      background-color: var(--btn-fundo-hover-simples);
-      cursor: not-allowed;
-    }
-  }
-}
-
-.resultado[data-jogo-finalizado] {
-  max-width: 80%;
-  margin: 40px auto 0;
-  display: flex;
-  flex-direction: column;
-  animation: result 0.6s 0.5s both;
-
-  .item-resultado {
+  form {
     display: flex;
-    justify-content: space-between;
-    padding: 5px 10px;
-    font-weight: 600;
-    font-size: 16px;
+    flex-direction: column;
+    gap: var(--spacing-md);
 
-    &.correta {
-      color: var(--cor-correta);
+    label {
+      font-size: 0.95rem;
+      font-weight: var(--font-weight-semibold);
+      color: var(--cor-label);
     }
 
-    &.errada {
-      color: var(--cor-errada);
-    }
-  }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+      padding: var(--spacing-sm);
+      font-size: 0.95rem;
+      border: 1px solid var(--cor-borda);
+      border-radius: var(--radius-sm);
+      background-color: var(--cor-fundo);
+      color: var(--cor-texto-primario);
 
-  .botao-reiniciar {
-    margin: 30px auto 0;
-    padding: 10px 20px;
-    border-radius: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    background-color: transparent;
-    color: #333;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background-color 0.3s;
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.1);
-    }
-  }
-}
-
-@keyframes result {
-  0% {
-    height: 0;
-  }
-  100% {
-    height: auto;
-  }
-}
-
-.gabarito-final {
-  margin-top: 40px;
-  background-color: rgba(255, 255, 255, 0.04);
-  padding: 20px;
-  border-radius: 10px;
-
-  .titulo-gabarito {
-    font-size: 20px;
-    font-weight: bold;
-    color: #fff;
-    margin-bottom: 20px;
-  }
-
-  .bloco-gabarito {
-    margin-bottom: 24px;
-
-    .enunciado-gabarito {
-      font-weight: 600;
-      font-size: 16px;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-
-    .lista-respostas {
-      list-style: none;
-      padding-left: 0;
-
-      li {
-        padding: 10px 14px;
-        margin-bottom: 6px;
-        border-radius: 6px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-
-        &.correta {
-          background-color: var(--cor-correta);
-          color: #000;
-        }
-
-        &.errada {
-          background-color: var(--cor-errada);
-          color: #fff;
-        }
-
-        &.selecionada:not(.correta):not(.errada) {
-          background-color: var(--btn-fundo-hover-simples);
-          color: #fff;
-        }
+      &:focus {
+        outline: 2px solid var(--cor-secundaria);
       }
     }
+  }
+}
+
+.texto-pergunta {
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  color: var(--cor-texto-primario);
+  margin-bottom: var(--spacing-md);
+}
+
+.respostas-pergunta li button.botao-pergunta {
+  width: 100%;
+  padding: 0.8rem 1.25rem;
+  font-size: 1rem;
+  font-weight: bold;
+  background-color: var(--cor-primaria);
+  color: var(--btn-texto);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: var(--btn-fundo-hover);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &:focus {
+    outline: 2px solid var(--cor-secundaria);
   }
 }

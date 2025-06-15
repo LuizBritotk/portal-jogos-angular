@@ -1,22 +1,22 @@
 <main id="jogos">
-  <section class="container-jogos">
-    <div
-      class="card-jogo"
+  <section class="jogos__container">
+    <article
+      class="jogo__card"
       *ngFor="let jogo of jogos"
       (click)="irParaJogo(jogo.rota)"
     >
-      <div class="card-imagem" [innerHTML]="jogo.svg | safeHtml"></div>
-      <div class="card-info">
-        <h3 class="nome-jogo">{{ jogo.nome }}</h3>
-        <p class="descricao-jogo">{{ jogo.descricao }}</p>
+      <div class="jogo__imagem" [innerHTML]="jogo.svg | safeHtml"></div>
+      <div class="jogo__conteudo">
+        <h3 class="jogo__nome">{{ jogo.nome }}</h3>
+        <p class="jogo__descricao">{{ jogo.descricao }}</p>
         <button
-          class="btn-jogar"
+          class="jogo__botao"
           (click)="irParaJogo(jogo.rota); $event.stopPropagation()"
           [attr.aria-label]="'Jogar ' + jogo.nome"
         >
           Jogar
         </button>
       </div>
-    </div>
+    </article>
   </section>
 </main>
