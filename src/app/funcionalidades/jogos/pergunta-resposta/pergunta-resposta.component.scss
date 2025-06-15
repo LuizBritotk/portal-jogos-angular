@@ -1,18 +1,8 @@
 @use "sass:color";
 
-$font: "Be Vietnam Pro", sans-serif;
-
-// Variáveis fixas para Sass
-$primary-color: #1f8197;
-
-// Variáveis CSS para propriedades usadas diretamente no CSS, sem manipulação Sass
-$correct-color: var(--cor-correta);
-$error-color: var(--cor-errada);
-$background-gradient: var(--gradiente-fundo);
-
 * {
   box-sizing: border-box;
-  font-family: $font;
+  font-family: var(--font-family-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -22,10 +12,10 @@ body {
   padding: 0 10vh;
   width: 100%;
   height: 100vh;
-  font-family: $font;
+  font-family: var(--font-family-sans);
   overflow: hidden;
   display: flex;
-  background: $background-gradient;
+  background: var(--gradiente-fundo);
   position: relative;
 
   &:after {
@@ -46,8 +36,21 @@ body {
 }
 
 .botao {
-  // Usando cor fixa para aplicar ajuste de cor
-  background-color: color.adjust($primary-color, $lightness: -10%);
+  background: var(--btn-fundo);
+  color: var(--btn-texto);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--sombra-suave);
+  transition: background var(--transition-medium);
+
+  &:hover {
+    background: var(--btn-fundo-hover);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
 }
 
 .tela-inicial {
@@ -80,9 +83,9 @@ body {
     }
 
     button.botao-pergunta {
-      background-color: $primary-color;
+      background-color: var(--cor-primaria);
       border: none;
-      color: white;
+
       font-weight: 600;
       font-size: 18px;
       padding: 14px 28px;
@@ -91,7 +94,7 @@ body {
       transition: background-color 0.3s;
 
       &:hover {
-        background-color: color.adjust($primary-color, $lightness: -10%);
+        background-color: var(--btn-fundo-hover-simples);
       }
 
       &:active {
@@ -105,8 +108,8 @@ body {
   display: block;
   margin: 0 auto 30px auto;
   padding: 12px 24px;
-  background-color: $primary-color;
-  color: white;
+  background-color: var(--cor-primaria);
+  // color: white;
   font-weight: 600;
   border: none;
   border-radius: 8px;
@@ -114,7 +117,7 @@ body {
   transition: background-color 0.3s;
 
   &:hover {
-    background-color: color.adjust($primary-color, $lightness: -10%);
+    background-color: var(--btn-fundo-hover-simples);
   }
 
   &:active {
@@ -123,7 +126,7 @@ body {
 }
 
 button {
-  font-family: $font;
+  font-family: var(--font-family-sans);
 }
 
 .pergunta-resposta.container {
@@ -145,7 +148,7 @@ button {
     font-size: 22px;
     font-weight: 600;
     text-align: center;
-    color: #fff;
+    // color: #fff;
     margin-bottom: 20px;
   }
 
@@ -161,7 +164,7 @@ button {
         padding: 14px 20px;
         font-size: 16px;
         font-weight: bold;
-        background-color: $primary-color;
+        background-color: var(--cor-primaria);
         color: #fff;
         border: none;
         border-radius: 6px;
@@ -169,7 +172,7 @@ button {
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: color.adjust($primary-color, $lightness: -10%);
+          background-color: var(--btn-fundo-hover-simples);
         }
 
         &:active {
@@ -177,7 +180,7 @@ button {
         }
 
         &:focus {
-          outline: 2px solid color.adjust($primary-color, $lightness: 15%);
+          outline: 2px solid var(--cor-secundaria);
         }
       }
     }
@@ -225,7 +228,7 @@ button {
         font-size: 16px;
         border-radius: 6px;
         font-weight: bold;
-        border: 2px solid $primary-color;
+        border: 2px solid var(--cor-primaria);
         background-color: #ffffff;
         color: #000000;
         cursor: pointer;
@@ -247,18 +250,9 @@ button {
         }
       }
 
-      input[type="radio"]:checked + .resposta-label {
-        background-color: $primary-color;
-        color: #ffffff;
-
-        &::before {
-          opacity: 1;
-          transform: translateY(-50%);
-        }
-      }
-
+      input[type="radio"]:checked + .resposta-label,
       &[data-selecionada="true"] .resposta-label {
-        background-color: $primary-color;
+        background-color: var(--cor-primaria);
         color: #fff;
 
         &::before {
@@ -268,8 +262,8 @@ button {
       }
 
       &[data-selecionada="true"].correta .resposta-label {
-        background-color: $correct-color; // variável CSS, sem ajuste
-        border-color: $correct-color;
+        background-color: var(--cor-correta);
+        border-color: var(--cor-correta);
         color: #000;
 
         &::before {
@@ -279,15 +273,15 @@ button {
       }
 
       &[data-selecionada="true"]:not(.correta) .resposta-label {
-        background-color: $error-color; // variável CSS, sem ajuste
-        border-color: $error-color;
+        background-color: var(--cor-errada);
+        border-color: var(--cor-errada);
         color: #fff;
       }
     }
   }
 
   .botao-pergunta {
-    background-color: $primary-color;
+    background-color: var(--cor-primaria);
     border: 0;
     padding: 14px 26px;
     color: #fff;
@@ -298,7 +292,7 @@ button {
     font-weight: 500;
 
     &:disabled {
-      background-color: color.adjust($primary-color, $lightness: -15%);
+      background-color: var(--btn-fundo-hover-simples);
       cursor: not-allowed;
     }
   }
@@ -319,11 +313,11 @@ button {
     font-size: 16px;
 
     &.correta {
-      color: $correct-color; // variável CSS
+      color: var(--cor-correta);
     }
 
     &.errada {
-      color: $error-color; // variável CSS
+      color: var(--cor-errada);
     }
   }
 
@@ -331,7 +325,7 @@ button {
     margin: 30px auto 0;
     padding: 10px 20px;
     border-radius: 4px;
-    border: 1px solid rgba(#fff, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     background-color: transparent;
     color: #333;
     font-weight: 500;
@@ -339,7 +333,7 @@ button {
     transition: background-color 0.3s;
 
     &:hover {
-      background-color: rgba(#000, 0.1);
+      background-color: rgba(0, 0, 0, 0.1);
     }
   }
 }
@@ -355,7 +349,7 @@ button {
 
 .gabarito-final {
   margin-top: 40px;
-  background-color: rgba(#fff, 0.04);
+  background-color: rgba(255, 255, 255, 0.04);
   padding: 20px;
   border-radius: 10px;
 
@@ -388,17 +382,17 @@ button {
         transition: all 0.3s ease;
 
         &.correta {
-          background-color: $correct-color; // variável CSS
+          background-color: var(--cor-correta);
           color: #000;
         }
 
         &.errada {
-          background-color: $error-color; // variável CSS
+          background-color: var(--cor-errada);
           color: #fff;
         }
 
         &.selecionada:not(.correta):not(.errada) {
-          background-color: color.adjust($primary-color, $lightness: 20%);
+          background-color: var(--btn-fundo-hover-simples);
           color: #fff;
         }
       }

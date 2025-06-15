@@ -1,21 +1,38 @@
 <main class="cadastro container">
-  <h2>Cadastro de Pergunta</h2>
+  <h2>Nova Pergunta</h2>
 
-  <label>Enunciado:</label>
-  <input [(ngModel)]="novaPergunta.enunciado" placeholder="Digite a pergunta" />
+  <div class="linha-form">
+    <div class="campo">
+      <div class="titulo-campo">Enunciado</div>
+      <input type="text" [(ngModel)]="novaPergunta.enunciado" placeholder="Digite o enunciado" />
+    </div>
 
-  <div class="resposta-item" *ngFor="let resposta of novaPergunta.respostas; let i = index">
-    <label>Resposta {{ i + 1 }}:</label>
-    <input [(ngModel)]="resposta.texto" placeholder="Digite a resposta" />
-    <label>
+    <div class="campo">
+      <div class="titulo-campo">Categoria</div>
+      <select [(ngModel)]="categoriaSelecionada">
+        <option value="" disabled selected>Selecione</option>
+        <option *ngFor="let categoria of categorias" [value]="categoria">{{ categoria }}</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="respostas-wrapper">
+    <div class="resposta-item" *ngFor="let resposta of novaPergunta.respostas; let i = index">
       <input
-        type="radio"
-        name="respostaCorreta"
-        [value]="i"
-        [(ngModel)]="novaPergunta.respostaCorretaIndex"
+        type="text"
+        [(ngModel)]="resposta.texto"
+        [placeholder]="'Resposta ' + (i + 1)"
       />
-      Correta
-    </label>
+      <div class="radio-correta">
+        <input
+          type="radio"
+          name="respostaCorreta"
+          [value]="i"
+          [(ngModel)]="novaPergunta.respostaCorretaIndex"
+        />
+        <span>Correta</span>
+      </div>
+    </div>
   </div>
 
   <button (click)="salvarPergunta()">Salvar Pergunta</button>

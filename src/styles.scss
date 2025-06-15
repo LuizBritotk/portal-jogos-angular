@@ -1,42 +1,38 @@
-/* === Variáveis Globais e Temas === */
-// Definidas como CSS custom properties para suporte ao modo escuro
 :root {
-  /* Cores */
-  --cor-primaria: #24292e;
-  --cor-secundaria: #0366d6;
-  --cor-terciaria: #28a745;
-  --cor-alerta: #d73a49;
-  --cor-fundo: #c9c4c4;
-  --cor-fundo-card: #cbcbcb;
-  --cor-fundo-secundario: #f5f5f5;
-  --cor-fundo-escuro: #f6f8fa;
-  --cor-texto-primario: #24292f;
-  --cor-texto-secundario: #586069;
-  --cor-borda: #e1e4e8;
-  --cor-link: #0366d6;
-  --cor-link-hover: #005cc5;
-  --btn-fundo: linear-gradient(135deg, #005f99, #003f66);
-  --btn-fundo-hover: linear-gradient(135deg, #0077cc, #005a99);
-  --btn-cor-texto: #e0eafc;
-  --btn-fundo-hover-simples: #005cc5;
+  --cor-primaria: #1f2a36;
+  --cor-secundaria: #2b8bce;
+  --cor-terciaria: #27ae60;
+  --cor-alerta: #e74c3c;
+  --cor-fundo: #f2f5f8;
+  --cor-fundo-card: #ffffff;
+  --cor-fundo-secundario: #f9fafb;
+  --cor-fundo-escuro: #e3e9ef;
+  --cor-texto-primario: #1a1a1a;
+  --cor-texto-secundario: #6b6b6b;
+  --cor-borda: #dcdfe3;
+  --cor-link: #2b8bce;
+  --cor-link-hover: #1d6ea5;
+  --btn-fundo: linear-gradient(135deg, #2b8bce, #1d6ea5);
+  --btn-fundo-hover: linear-gradient(135deg, #3ba3e0, #267aa7);
+  --btn-cor-texto: #ffffff;
+  --btn-fundo-hover-simples: #267aa7;
   --btn-texto: #ffffff;
-  --cor-label: #ffffff;
-  --tabela-fundo-cabecalho: #f6f8fa;
-  --tabela-texto-cabecalho: #24292f;
-  --tabela-borda: #d1d5da;
-  --tabela-fundo-linha-alternada: #fafbfc;
+  --cor-label: #333333;
+  --tabela-fundo-cabecalho: #f0f3f6;
+  --tabela-texto-cabecalho: #1a1a1a;
+  --tabela-borda: #dcdfe3;
+  --tabela-fundo-linha-alternada: #ffffff;
   --cor-fixa-amarelo: #fdd835;
   --cor-fixa-azul-celeste: #00bcd4;
   --cor-hover: rgba(0, 0, 0, 0.05);
-  --cor-hover-escuro: rgba(255, 255, 255, 0.1);
-  --cor-hover-borda: #d1d5da;
-  --cor-formulario: linear-gradient(135deg, #000000, #0a1f44, #1a3b70);
-  --cor-labels: linear-gradient(135deg, #e0eafc, #cfdef3, #dbe9f4);
-  --svg-bg-fill: #3a3a3a;
-  --svg-stroke: rgb(255, 253, 253);
-  --svg-text-fill: white;
+  --cor-hover-escuro: rgba(0, 0, 0, 0.08);
+  --cor-hover-borda: #dcdfe3;
+  --cor-formulario: linear-gradient(135deg, #ffffff, #f3f6fa);
+  --cor-labels: linear-gradient(135deg, #f3f6fa, #e7edf3);
+  --svg-bg-fill: #4c4c4c;
+  --svg-stroke: #1f2a36;
+  --svg-text-fill: #1a1a1a;
 
-  /* Espaçamentos */
   --spacing-xxs: 0.125rem;
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -45,26 +41,22 @@
   --spacing-xl: 2rem;
   --spacing-xxl: 3rem;
 
-  /* Borda e radius */
   --radius-sm: 4px;
   --radius-md: 6px;
-  --radius-lg: 8px;
+  --radius-lg: 10px;
   --borda-fina: 1px solid var(--cor-borda);
 
-  /* Tipografia */
-  --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-family-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-weight-normal: 400;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
   --font-size-base: 16px;
   --line-height-base: 1.5;
 
-  /* Sombras */
-  --sombra-suave: 0 1px 6px rgba(0, 0, 0, 0.07);
-  --sombra-moderada: 0 4px 12px rgba(0, 0, 0, 0.1);
-  --sombra-forte: 0 12px 24px rgba(0, 0, 0, 0.15);
+  --sombra-suave: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --sombra-moderada: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --sombra-forte: 0 10px 15px rgba(0, 0, 0, 0.15);
 
-  /* Transições */
   --transition-fast: 0.15s ease-in-out;
   --transition-medium: 0.3s ease-in-out;
   --transition-slow: 0.5s ease-in-out;
@@ -72,6 +64,17 @@
 
 /* Tema Escuro */
 .tema-escuro {
+  --cor-fundo: #0d1117;
+  --cor-texto-primario: #c9d1d9;
+  --cor-label: #ffffff;
+  --cor-formulario: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --cor-labels: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  --svg-bg-fill: #ffffffec;
+  --svg-stroke: #3b3b3b;
+  --svg-text-fill: #000000;
+  --cor-correta: #2ecc71;
+  --cor-errada: #e74c3c;
+  --gradiente-fundo: linear-gradient(135deg, #161b22, #0d1117);
   --cor-primaria: #c9d1d9;
   --cor-secundaria: #58a6ff;
   --cor-terciaria: #3fb950;
