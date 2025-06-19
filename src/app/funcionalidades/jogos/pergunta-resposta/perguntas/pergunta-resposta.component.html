@@ -1,0 +1,63 @@
+<main class="quiz-container">
+
+  <!-- Tela do quiz em andamento -->
+  <section *ngIf="!jogoFinalizado && perguntaAtual as pergunta" class="jogo">
+    <div class="titulo-quiz">
+      Pergunta {{ perguntaAtualIndex + 1 }} de {{ perguntas.length }}
+    </div>
+
+    <div class="texto-pergunta">
+      {{ pergunta.enunciado }}
+    </div>
+
+    <ul class="respostas">
+      <li *ngFor="let resp of pergunta.respostas; let i = index"
+          [class.selecionada]="respostaSelecionada === i"
+          (click)="selecionarResposta(i)">
+        {{ resp.texto }}
+      </li>
+    </ul>
+
+    <button
+      class="botao-proximo"
+      [disabled]="respostaSelecionada === null"
+      (click)="proximaPergunta()"
+    >
+      {{ perguntaAtualIndex + 1 < perguntas.length ? 'Próxima' : 'Finalizar' }}
+    </button>
+  </section>
+
+  <!-- Tela caso não existam perguntas -->
+  <section *ngIf="!carregando && perguntas.length === 0" class="sem-perguntas">
+    <h2>Nenhuma pergunta encontrada para a categoria <strong>{{ categoriaSelecionada }}</strong>.</h2>
+
+    <button class="botao-cadastrar" (click)="irParaCadastro()">
+      Cadastrar nova pergunta
+    </button>
+
+    <button class="botao-voltar" (click)="reiniciar()">
+      Voltar à seleção de categoria
+    </button>
+  </section>
+
+  <!-- Tela de resultado final -->
+  <section *ngIf="jogoFinalizado" class="resultado">
+    <h2 class="titulo-quiz">Resultado Final</h2>
+
+    <div *ngFor="let pergunta of perguntas; let i = index" class="resultado-item"
+         [class.correta]="pergunta.respostas[respostasUsuario[i]].correta"
+         [class.errada]="!pergunta.respostas[respostasUsuario[i]].correta">
+
+      <div class="pergunta-txt">
+        Pergunta {{ i + 1 }}: {{ pergunta.enunciado }}
+      </div>
+
+      <div class="resposta-txt">
+        Sua resposta: {{ pergunta.respostas[respostasUsuario[i]].texto || 'Nenhuma' }}
+      </div>
+    </div>
+
+    <button class="botao-reiniciar" (click)="reiniciar()">Reiniciar</button>
+  </section>
+
+</main>

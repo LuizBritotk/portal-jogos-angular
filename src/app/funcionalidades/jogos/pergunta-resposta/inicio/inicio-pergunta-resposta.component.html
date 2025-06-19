@@ -1,0 +1,30 @@
+<main class="tela-inicial container">
+  <form [formGroup]="form" (ngSubmit)="iniciarJogo()" class="formulario-entrada">
+    <h1 class="titulo-quiz">Bem-vindo ao Quiz!</h1>
+
+    <div class="grupo-campos">
+      <div class="campo-formulario">
+        <div class="texto-campo">Digite seu nome:</div>
+        <input
+          id="nome"
+          type="text"
+          formControlName="nome"
+          placeholder="Seu nome"
+          required
+        />
+      </div>
+
+      <div class="campo-formulario">
+        <div class="texto-campo">Escolha uma categoria:</div>
+        <select id="categoria" formControlName="categoria" required>
+          <option value="" disabled selected>Selecione...</option>
+          <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+        </select>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="form.invalid" class="botao-iniciar">
+      Iniciar Jogo
+    </button>
+  </form>
+</main>

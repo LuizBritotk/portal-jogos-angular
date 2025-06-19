@@ -10,11 +10,11 @@ export interface Resposta {
  * Representa uma pergunta do quiz com múltiplas opções de resposta.
  */
 export interface Pergunta {
-  enunciado: string;             // Enunciado da pergunta (ex: "Quem foi o primeiro imperador do Brasil?")
-  respostas: Resposta[];         // Lista de 4 respostas possíveis
-  respostaCorretaIndex: number;  // Índice da resposta correta no array "respostas"
+  id?: string;
+  enunciado: string;
+  categoria: string;
+  respostas: Resposta[];
 }
-
 /**
  * Representa um usuário e sua pontuação dentro de um ranking.
  */

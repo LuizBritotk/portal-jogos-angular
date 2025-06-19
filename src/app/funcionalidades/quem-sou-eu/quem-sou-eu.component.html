@@ -1,86 +1,55 @@
-<main class="quem-sou-eu container">
-  <section class="perfil"  data-section>
-    <h1 class="titulo">Quem Sou Eu</h1>
-    <p class="subtitulo">Sou Luiz Brito, desenvolvedor de sistemas com ampla experiência em soluções robustas, escaláveis e de alta performance. Com trajetória sólida em grandes empresas e consultorias, me especializei na construção de APIs, sistemas web completos, arquitetura de software e manutenção de legados complexos.</p>
-  </section>
+<div id="smooth-wrapper">
+  <div id="smooth-content">
+    <main class="apresentacao-refokus">
 
-  <section class="empresas"  data-section>
-    <h2 class="secao-titulo">🏢 Empresas que Trabalhei</h2>
-    <ul>
-      <li>Stefanini IT Solutions</li>
-      <li>Reply</li>
-      <li>5A Attiva</li>
-      <li>Bematize</li>
-      <li>Lojão do Brás</li>
-    </ul>
-  </section>
+      <!-- PERFIL - Estilo Luiz Apresentação -->
+      <section class="secao perfil-luiz" id="perfil" data-section>
+        <div class="conteudo apresentacao-luiz" data-animate="fade-up" style="margin-left: var(--spacing-xl); display: flex; align-items: flex-start; gap: var(--spacing-xl); flex-wrap: wrap;">
+          <div class="coluna-nome">
+            <h1 class="titulo-linha linha-1">LU</h1>
+            <h1 class="titulo-linha linha-2"> IZ</h1>
+            <div class="coluna-texto">
+              <p class="sub destaque">
+                Sou desenvolvedor com mais de 9 anos de experiência, APIs robustas e modernização de legados.
+              </p>
+              <p class="sub destaque">
+                Atuo com tecnologias como .NET, Angular, SQL Server e Azure, sempre aplicando boas práticas como SOLID, DDD e TDD.
+              </p>
+            </div>
+          </div>
+          <div class="coluna-foto">
+            <img src="assets/quem-sou-eu/luiz-sem-fundo.png" alt="Foto Luiz Brito" class="foto-luiz" style="width: 350px; height: auto;" />
+          </div>
+        </div>
+      </section>
 
-  <section class="clientes"  data-section>
-    <h2 class="secao-titulo">🤝 Clientes que Atendi</h2>
-    <ul>
-      <li><strong>Stefanini IT Solutions:</strong> Zurich Seguros</li>
-      <li><strong>Reply:</strong> Berkley Seguros, Zurich Seguros</li>
-      <li><strong>Bematize:</strong> iFood, Metlife, Amil, Grupo Boticário, Deloitte, Gerdau, EDP, Cogna, Novartis, MCassab, Unither</li>
-      <li><strong>Lojão do Brás:</strong> Todas as empresas do grupo</li>
-    </ul>
-  </section>
+      <div class="section-transition"></div>
 
-  <section class="tecnologias"  data-section>
-    <h2 class="secao-titulo">💻 Tecnologias que Domino</h2>
-    <ul class="tech-list">
-      <li><strong>Frontend:</strong> HTML5, CSS3, SCSS, JavaScript, TypeScript, jQuery, KnockoutJS, Angular (2+), React, AJAX, Material-UI, Bootstrap, Razor, Web Components, Tailwind CSS, WebSockets</li>
-      <li><strong>Backend:</strong> ASP Clássico, ASP.NET Web Forms, ASP.NET MVC, ASP.NET Core (2.0 até .NET 9), WebAPI, REST, GraphQL, gRPC, Blazor, Minimal APIs, MediatR</li>
-      <li><strong>Banco de Dados:</strong> SQL Server, T-SQL, PL/SQL, Oracle, MySQL, PostgreSQL, Dapper, Entity Framework, EF Core, Redis, SQLite, Firebase Realtime Database</li>
-      <li><strong>Arquiteturas e Padrões:</strong> DDD, SOLID, CQRS, Clean Architecture, Microservices, Monolito Modular, TDD, BDD, Hexagonal Architecture, Serverless Architecture</li>
-      <li><strong>Ferramentas e DevOps:</strong> Visual Studio (2012–2022), Visual Studio Code, Git, GitHub, GitLab, Azure DevOps, TFS, CI/CD Pipelines, Postman, Swagger, IIS, GitFlow</li>
-      <li><strong>Testes:</strong> xUnit, Moq, Selenium</li>
-      <li><strong>Metodologias:</strong> Scrum, Kanban, ITIL, GMUD, Agile</li>
-      <li><strong>Outros:</strong> Firebase, Auth0, IdentityServer, JWT, OAuth2, RESTful Standards, Responsividade, Acessibilidade, CORS, XSS Protection, CSRF Tokens, Rate Limiting, Logging Seguro, Monitoramento com Application Insights e Log Analytics, OpenID Connect, Secure Headers, Secrets Manager, API Gateway</li>
-    </ul>
-  </section>
+      <!-- EMPRESAS -->
+      <section class="secao empresas-luiz cinza" id="empresas" data-section>
+        <div class="conteudo" data-animate="fade-left">
+          <h2 class="titulo-secao">Empresas que Trabalhei</h2>
+          <div class="grid-empresas">
+            <div class="card-empresa" *ngFor="let empresa of empresas">
+              <div class="card-inner">
+                <div class="card-front">
+                  <span class="empresa-nome">{{ empresa.nome }}</span>
+                </div>
+                <div class="card-back">
+                  <span class="empresa-ramo">{{ empresa.ramo }}</span>
+                  <span class="empresa-periodo">{{ empresa.periodo }}</span>
+                  <!-- <p class="empresa-detalhe">{{ empresa.detalhe }}</p> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <section class="diferenciais"  data-section>
-    <h2 class="secao-titulo">🚀 Diferenciais Profissionais</h2>
-    <ul>
-      <li>Experiência com sistemas de missão crítica e alta disponibilidade</li>
-      <li>Facilidade de comunicação entre áreas técnicas e de negócio</li>
-      <li>Comprometimento com clean code, performance e segurança</li>
-      <li>Capacidade de liderar projetos end-to-end</li>
-    </ul>
-  </section>
 
-  <section class="impactos"  data-section>
-    <h2 class="secao-titulo">📈 Impactos Gerados</h2>
-    <ul>
-      <li>Redução de até 40% no tempo de resposta de APIs críticas</li>
-      <li>Modernização de sistemas legados com ganhos reais de performance</li>
-      <li>Participação em projetos com mais de 1 milhão de usuários</li>
-    </ul>
-  </section>
+      <!-- <div class="section-transition reverse"></div> -->
 
-  <section class="certificacoes"  data-section>
-    <h2 class="secao-titulo">🎓 Certificações e Cursos</h2>
-    <ul>
-      <li>Rocketseat Ignite (React & .NET)</li>
-      <li>Udemy – .NET Avançado, Clean Architecture, Angular Avançado</li>
-      <li>Alura – CQRS, TDD, DDD, DevOps na prática</li>
-    </ul>
-  </section>
 
-  <section class="comunidade"  data-section>
-    <h2 class="secao-titulo">🤝 Comunidade e Mentoria</h2>
-    <ul>
-      <li>Mentoria para desenvolvedores iniciantes</li>
-      <li>Contribuições em fóruns como Stack Overflow e GitHub</li>
-      <li>Participação em eventos técnicos e meetups de desenvolvimento</li>
-    </ul>
-  </section>
-
-  <section class="idiomas"  data-section>
-    <h2 class="secao-titulo">🌐 Idiomas</h2>
-    <ul>
-      <li>Inglês — Intermediário</li>
-      <li>Espanhol — Intermediário</li>
-    </ul>
-  </section>
-</main>
+    </main>
+  </div>
+</div>

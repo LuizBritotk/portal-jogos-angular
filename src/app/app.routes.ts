@@ -26,16 +26,40 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./funcionalidades/jogos/jogo-da-velha/jogo-da-velha.component').then(m => m.JogoDaVelhaComponent)
       },
+
+      // 🔽 Pergunta-Resposta
       {
         path: 'jogos/pergunta-resposta',
-        loadComponent: () =>
-          import('./funcionalidades/jogos/pergunta-resposta/pergunta-resposta.component').then(m => m.PerguntaRespostaComponent)
+        children: [
+          {
+            path: '',
+            redirectTo: 'inicio',
+            pathMatch: 'full'
+          },
+          {
+            path: 'inicio',
+            loadComponent: () =>
+              import('./funcionalidades/jogos/pergunta-resposta/inicio/inicio-pergunta-resposta.component').then(
+                m => m.InicioPerguntaRespostaComponent
+              )
+          },
+          {
+            path: 'iniciar',
+            loadComponent: () =>
+              import('./funcionalidades/jogos/pergunta-resposta/perguntas/pergunta-resposta.component').then(
+                m => m.PerguntaRespostaComponent
+              )
+          },
+          {
+            path: 'cadastro',
+            loadComponent: () =>
+              import('./funcionalidades/jogos/pergunta-resposta/cadastro/cadastro-pergunta.component').then(
+                m => m.CadastroPerguntaComponent
+              )
+          }
+        ]
       },
-      {
-        path: 'jogos/pergunta-resposta/cadastro',
-        loadComponent: () =>
-          import('./funcionalidades/jogos/pergunta-resposta/cadastro-pergunta-resposta/cadastro-pergunta.component').then(m => m.CadastroPerguntaComponent)
-      },
+
       {
         path: 'quem-sou-eu',
         loadComponent: () =>

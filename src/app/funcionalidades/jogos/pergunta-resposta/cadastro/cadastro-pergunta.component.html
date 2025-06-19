@@ -1,0 +1,36 @@
+<main class="container-cadastro">
+  <form [formGroup]="form" (ngSubmit)="salvar()">
+    <h2>Cadastrar Pergunta</h2>
+
+    <div class="form-label" for="enunciado">Enunciado:</div>
+    <input id="enunciado" formControlName="enunciado" type="text" required />
+
+    <div class="form-label" for="categoria">Categoria:</div>
+    <select id="categoria" formControlName="categoria" required>
+      <option value="" disabled selected>Selecione...</option>
+      <option *ngFor="let cat of categorias" [value]="cat">{{ cat }}</option>
+    </select>
+
+    <fieldset class="grupo-respostas">
+      <legend>Respostas:</legend>
+
+      <div *ngFor="let respostaCtrl of respostas; let i = index" class="resposta-item">
+        <input [formControl]="respostaCtrl" type="text" placeholder="Resposta {{ i + 1 }}" />
+       <div class="radio-wrapper">
+        <input
+          type="radio"
+          formControlName="respostaCorretaIndex"
+          [value]="i"
+          name="respostaCorretaIndex"
+          id="resposta-{{ i }}"
+        />
+        <div class="radio-label" (click)="selecionarRespostaCorreta(i)">
+          Correta
+        </div>
+      </div>
+      </div>
+    </fieldset>
+
+    <button type="submit" [disabled]="form.invalid">Salvar Pergunta</button>
+  </form>
+</main>

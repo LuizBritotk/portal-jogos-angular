@@ -1,130 +1,177 @@
+.perfil-luiz {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-xxl) 6rem;
+  background: var(--cor-fundo);
+  color: var(--cor-texto-primario);
 
-.quem-sou-eu {
-  padding: 2rem;
-  font-family: var(--font-family-sans);
-  color: var(--cor-texto-primaria);
-
-  .titulo {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--cor-titulo);
+  .apresentacao-luiz {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    // gap: var(--spacing-xl);
+    max-width: 1000px;
+    width: 100%;
+    margin-left: var(--spacing-xl);
   }
 
-  .subtitulo {
-    font-size: 1.25rem;
-    color: var(--cor-texto-secundaria);
-    margin-bottom: 2rem;
-    max-width: 800px;
-  }
+  .coluna-nome {
+    flex: 0 1 205px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-  .secao-titulo {
-    font-size: 1.75rem;
-    margin-top: 2.5rem;
-    margin-bottom: 1rem;
-    color: var(--cor-secundaria);
-    border-bottom: 2px solid var(--cor-borda);
-    padding-bottom: 0.25rem;
-  }
+    .titulo-linha {
+      font-family: var(--font-family-sans);
+      font-size: 5rem;
+      font-weight: var(--font-weight-bold);
+      letter-spacing: -2px;
+      line-height: 1;
+      color: var(--cor-secundaria);
+      animation: fadeInUp var(--transition-medium) ease forwards;
 
-  section {
-    margin-bottom: 2rem;
-  }
+      &.linha-1 {
+        margin-bottom: var(--spacing-xs);
+      }
 
-  ul {
-    list-style: disc inside;
-    padding-left: 1rem;
-    line-height: 1.8;
-
-    li {
-      margin-bottom: 0.5rem;
+      &.linha-2 {
+        margin-bottom: var(--spacing-lg);
+        padding-left: var(--spacing-xxxl);
+      }
     }
 
-    strong {
-      color: var(--cor-destaque);
-    }
-  }
+    .coluna-texto {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
 
-  .tech-list {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1rem;
-
-    @media (min-width: 768px) {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    @media (min-width: 1024px) {
-      grid-template-columns: 1fr 1fr 1fr;
-    }
-
-    li {
-      background: var(--cor-fundo-card);
-      padding: 1rem;
-      border-radius: var(--borda-raio);
-      box-shadow: var(--sombra-suave);
-      transition: background 0.3s;
-
-      &:hover {
-        background: var(--cor-fundo-card-hover);
+      .sub.destaque {
+        font-size: 1.125rem;
+        color: var(--cor-texto-secundario);
+        line-height: 1.6;
+        animation: fadeInUp var(--transition-medium) ease forwards;
       }
     }
   }
 
-  .perfil {
-    text-align: left;
+  .coluna-foto {
+    // flex: 1 1 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    @media (min-width: 768px) {
+    .foto-luiz {
+      width: 100%;
+      max-width: 350px;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--sombra-moderada);
+      transform: scale(1);
+      transition: transform var(--transition-medium);
+      transform: none;
+      transition: none;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .apresentacao-luiz {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .coluna-nome {
+      align-items: center;
       text-align: center;
+
+      .titulo-linha {
+        font-size: 3.5rem;
+      }
+    }
+
+    .coluna-foto {
+      .foto-luiz {
+        max-width: 250px;
+      }
     }
   }
 }
-.parallax-wrapper {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
 
-  section[data-section] {
-    min-height: 100vh;
-    padding: 4rem 2rem;
+// Animação simples para entrada
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.grid-empresas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--spacing-lg);
+  padding-top: var(--spacing-lg);
+}
+
+.card-empresa {
+  perspective: 1000px;
+
+  .card-inner {
+    position: relative;
+    width: 100%;
+    height: 280px;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+  }
+
+  &:hover .card-inner {
+    transform: rotateY(180deg);
+  }
+
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: var(--radius-md);
+    backface-visibility: hidden;
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    background-color: var(--bg-principal);
-    color: var(--texto-principal);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    padding: var(--spacing-md);
+    box-shadow: var(--sombra-moderada);
+  }
 
-    &:nth-child(even) {
-      background-color: var(--bg-secundario);
+  .card-front {
+    background: var(--card-bg);
+    color: var(--cor-texto-primario);
+    font-weight: var(--font-weight-semibold);
+    font-size: 1.2rem;
+  }
+
+  .card-back {
+    background: var(--cor-secundaria);
+    color: #fff;
+    transform: rotateY(180deg);
+    flex-direction: column;
+    text-align: center;
+
+    .empresa-ramo {
+      font-size: 0.9rem;
+      font-weight: 500;
+      opacity: 0.8;
     }
 
-    .secao-titulo {
-      font-size: 2.2rem;
-      margin-bottom: 1.5rem;
-      color: var(--destaque);
+    .empresa-periodo {
+      font-size: 0.8rem;
+      margin: var(--spacing-xs) 0;
     }
 
-    ul, p {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    strong {
-      color: var(--cor-primaria);
-    }
-
-    .tech-list li {
-      margin-bottom: 0.5rem;
-    }
-
-    .empresas-clientes-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 2rem;
-    }
-
-    .bloco h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-      color: var(--cor-primaria);
+    .empresa-detalhe {
+      font-size: 0.9rem;
+      line-height: 1.4;
     }
   }
 }
