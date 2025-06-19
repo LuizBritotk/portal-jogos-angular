@@ -45,35 +45,30 @@ export class QuemSouEuComponent implements AfterViewInit {
 empresas = [
   {
     nome: 'Stefanini IT Solutions',
+    logo: 'assets/quem-sou-eu/logo-stefanini.png',
     ramo: 'Consultoria em TI e Transformação Digital',
     periodo: 'Jan/2020 - Dez/2020',
-    detalhe: 'Atuei em projetos de modernização de sistemas legados, com foco em APIs REST, arquitetura modular e integração com serviços externos em .NET Core e Angular.'
-  },
+   },
   {
     nome: 'Reply',
+    logo: 'assets/quem-sou-eu/logo-reply.png',
     ramo: 'Serviços de TI e Transformação Digital (Multinacional)',
     periodo: 'Jan/2021 - Ago/2021',
-    detalhe: 'Trabalhei em uma squad internacional de soluções para grandes clientes. Foquei em padrões de arquitetura limpa, integração com serviços de mensageria e segurança.'
-  },
-  {
-    nome: '5A Attiva',
-    ramo: 'Outsourcing e soluções em TI',
-    periodo: 'Set/2021 - Abr/2022',
-    detalhe: 'Responsável por dar suporte técnico e implementar melhorias em sistemas críticos. Trabalhei com boas práticas como SOLID e TDD, com forte uso de SQL Server e .NET.'
   },
   {
     nome: 'Bematize',
+    logo: 'assets/quem-sou-eu/logo-bematize.png',
     ramo: 'Gestão de benefícios corporativos',
     periodo: 'Mai/2022 - Nov/2022',
-    detalhe: 'Desenvolvi soluções para portais e serviços internos, com foco em performance e estabilidade. Implantação de esteiras CI/CD e integrações com APIs financeiras.'
   },
   {
     nome: 'Lojão do Brás',
+    logo: 'assets/quem-sou-eu/logo-lojao.png',
     ramo: 'Varejo e Soluções Internas de TI',
     periodo: 'Dez/2022 - Atual',
-    detalhe: 'Responsável técnico por sistemas internos da empresa. Implantei soluções escaláveis, refatorei processos críticos e atuei como líder técnico em projetos estratégicos.'
   }
 ];
+
 
   clientes = [
     { empresa: 'Stefanini', nomes: ['Zurich Seguros'] },

@@ -2,37 +2,58 @@
   <div id="smooth-content">
     <main class="apresentacao-refokus">
 
-      <!-- PERFIL - Estilo Luiz Apresentação -->
+      <!-- PERFIL CINEMÁTICO -->
       <section class="secao perfil-luiz" id="perfil" data-section>
-        <div class="conteudo apresentacao-luiz" data-animate="fade-up" style="margin-left: var(--spacing-xl); display: flex; align-items: flex-start; gap: var(--spacing-xl); flex-wrap: wrap;">
+        <div class="conteudo apresentacao-luiz" data-animate="fade-up">
           <div class="coluna-nome">
             <h1 class="titulo-linha linha-1">LU</h1>
-            <h1 class="titulo-linha linha-2"> IZ</h1>
+            <h1 class="titulo-linha linha-2">IZ</h1>
             <div class="coluna-texto">
               <p class="sub destaque">
-                Sou desenvolvedor com mais de 9 anos de experiência, APIs robustas e modernização de legados.
+                Desenvolvedor com <strong>+9 anos de experiência</strong>, APIs robustas, arquitetura limpa e soluções escaláveis.
               </p>
-              <p class="sub destaque">
-                Atuo com tecnologias como .NET, Angular, SQL Server e Azure, sempre aplicando boas práticas como SOLID, DDD e TDD.
-              </p>
+              <div class="coluna-tecnologias">
+              <h3 class="titulo-tec">Stack de Especialidade</h3>
+              <div class="grid-tecnologias" data-animate="fade-up">
+                <ng-container *ngFor="let categoria of tecnologias">
+                  <div class="grupo-tec">
+                    <h4>{{ categoria.nome }}</h4>
+                    <div class="lista-tec">
+                      <span *ngFor="let item of categoria.itens" class="tecnologia">
+                        <i class="{{ item.icone }}"></i>
+                        {{ item.nome }}
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
             </div>
           </div>
           <div class="coluna-foto">
-            <img src="assets/quem-sou-eu/luiz-sem-fundo.png" alt="Foto Luiz Brito" class="foto-luiz" style="width: 350px; height: auto;" />
+            <div class="fundo-foto">
+              <img src="assets/quem-sou-eu/luiz-sem-fundo.png" alt="Luiz Brito" class="foto-luiz" />
+            </div>
           </div>
         </div>
       </section>
 
       <div class="section-transition"></div>
 
-      <!-- EMPRESAS -->
+      <!-- EMPRESAS COM IMPACTO -->
       <section class="secao empresas-luiz cinza" id="empresas" data-section>
         <div class="conteudo" data-animate="fade-left">
-          <h2 class="titulo-secao">Empresas que Trabalhei</h2>
+          <h2 class="titulo-secao destaque-animado">
+            <span class="linha">Onde deixei minha marca</span>
+            <hr>
+            <small class="subtexto">Empresas em que atuei com propósito, tecnologia e entrega</small>
+          </h2>
+
           <div class="grid-empresas">
             <div class="card-empresa" *ngFor="let empresa of empresas">
               <div class="card-inner">
                 <div class="card-front">
+                  <img [src]="empresa.logo" alt="{{ empresa.nome }}" class="logo-empresa" />
                   <span class="empresa-nome">{{ empresa.nome }}</span>
                 </div>
                 <div class="card-back">
@@ -46,10 +67,8 @@
         </div>
       </section>
 
-
-      <!-- <div class="section-transition reverse"></div> -->
-
-
+      <div class="section-transition reverse"></div>
     </main>
   </div>
 </div>
+<!-- Rodapé -->
