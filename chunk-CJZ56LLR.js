@@ -1,1 +1,0 @@
-import{_a as t,nb as n,ob as m,wb as a}from"./chunk-SJU3657H.js";var i=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-demo"]],decls:2,vars:0,template:function(e,s){e&1&&(n(0,"p"),a(1,"demo works!"),m())},encapsulation:2})};export{i as DemoComponent};
